@@ -3,30 +3,48 @@
 	auto_https disable_redirects
 }
 
-(header-sec) {
+(header-common-sec) {
 	header {
 		-Server
 		-X-Powered-By
-        X-Content-Type-Options nosniff
+		X-Content-Type-Options nosniff
 		X-Frame-Options SAMEORIGIN
 		Referrer-Policy strict-origin-when-cross-origin
-		Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
-		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), fullscreen=(self), interest-cohort=()"
-		Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; frame-ancestors 'self';"
+		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), fullscreen=(self)"
 		Cross-Origin-Opener-Policy "same-origin"
 		Cross-Origin-Resource-Policy "same-origin"
+		X-Permitted-Cross-Domain-Policies none
+		X-Download-Options noopen
+		X-XSS-Protection "0"
+	}
+}
+
+(header-clearnet-sec) {
+	import header-common-sec
+	header {
+		Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+		Content-Security-Policy "default-src 'none'; base-uri 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; frame-ancestors 'self'; upgrade-insecure-requests;"
+	}
+}
+
+(header-tor-sec) {
+	import header-common-sec
+	header {
+		Content-Security-Policy "default-src 'none'; base-uri 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; frame-ancestors 'self';"
 	}
 }
 
 http://gergo.miszori.hu, http://mg.nxm.hu, https://mg.nxm.hu {
-	import header-sec
+	import header-clearnet-sec
 	redir https://gergo.miszori.hu/ permanent
 }
 
 https://gergo.miszori.hu {
-	import header-sec
-	header Onion-Location http://gmiszorix5ntd4wr5gyicjbapgue57gvgjr6euaf7wozeofsrbwhu2id.onion
+	import header-clearnet-sec
+	header Onion-Location http://gmiszorix5ntd4wr5gyicjbapgue57gvgjr6euaf7wozeofsrbwhu2id.onion{uri}
 	root * /srv
+
+	encode zstd gzip
 
 	@fallbackRedirect {
 		not path /
@@ -46,8 +64,10 @@ https://gergo.miszori.hu {
 }
 
 http://gmiszorix5ntd4wr5gyicjbapgue57gvgjr6euaf7wozeofsrbwhu2id.onion {
-	import header-sec
+	import header-tor-sec
 	root * /srv
+
+	encode zstd gzip
 
 	@fallbackRedirectOnion {
 		not path /
