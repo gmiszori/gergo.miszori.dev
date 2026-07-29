@@ -1,0 +1,144 @@
+const TRANSLATIONS = {
+  en: {
+    hero_badge: "Recent high school graduate",
+    hero_title: "Hi, I'm <span>Gergő Miszori</span>",
+    hero_desc: "Passionate about computer science, mathematics, and finance. Interested in a lot of random things. Love to work in a team.",
+    bento_about_title: "👋 About Me",
+    bento_about_text: "I am an 18-year-old student currently based in Szeged. I recently graduated from Radnóti Miklós High School after completing a six-year specialized mathematics program. Over those years, I deeply explored the world of computer science—engaging in national competitive programming contests, working on projects like CanSat, and even assisting in AI-powered biology research. Outside of my tech interests, I enjoy hitting the gym, exploring old buildings, and catching up on series.",
+    bento_stats_title: "🏆 Highlights",
+    stat_1_label: "Computer Science",
+    stat_1_sub: "Advanced Matura (2025)",
+    stat_2_label: "Mathematics",
+    stat_2_sub: "Advanced Matura (2026)",
+    bento_lang_title: "🌐 Languages",
+    lang_de_name: "German",
+    lang_en_name: "English",
+    lang_hu_name: "Hungarian",
+    lang_hu_badge: "Native",
+    bento_interests_title: "👀 Tech Ecosystem & Focus",
+    tag_1: "💻 MacBook Pro",
+    tag_2: "🤖 Generative AI",
+    tag_3: "🔒 Cybersecurity",
+    tag_4: "🤝 Team Leadership",
+    tag_5: "📈 Quantitative Finance",
+    tag_6: "✈️ Aerospace",
+    tag_7: "💪 Athletics",
+    tag_8: "🏚 Urbex",
+    last_updated: "Last updated",
+    footer_rights: "All rights reserved."
+  },
+  de: {
+    hero_badge: "Frischgebackener Gymnasiums-Absolvent",
+    hero_title: "Hallo, ich bin <br><span>Gergő Miszori</span>",
+    hero_desc: "Begeistert von Informatik, Mathematik und Finanzen. Interessiert an vielen verschiedenen Dingen. Liebe die Arbeit im Team.",
+    bento_about_title: "👋 Über mich",
+    bento_about_text: "Ich bin ein 18-jähriger Student, der derzeit in Szeged lebt. Ich habe vor kurzem das Radnóti Miklós Gymnasium nach dem Abschluss eines sechsjährigen spezialisierten Mathematikprogramms abgeschlossen. In diesen Jahren habe ich die Welt der Informatik tiefgehend erkundet – ich habe an nationalen Programmierwettbewerben teilgenommen, an Projekten wie CanSat gearbeitet und sogar bei KI-gestützter Biologieforschung assistiert. Abseits meiner technologischen Interessen gehe ich gerne ins Fitnessstudio, erkunde alte Gebäude und schaue Serien.",
+    bento_stats_title: "🏆 Highlights",
+    stat_1_label: "Informatik",
+    stat_1_sub: "Abitur auf erhöhtem Niveau (2025)",
+    stat_2_label: "Mathematik",
+    stat_2_sub: "Abitur auf erhöhtem Niveau (2026)",
+    bento_lang_title: "🌐 Sprachen",
+    lang_de_name: "Deutsch",
+    lang_en_name: "Englisch",
+    lang_hu_name: "Ungarisch",
+    lang_hu_badge: "Muttersprache",
+    bento_interests_title: "👀 Tech-Ökosystem & Fokus",
+    tag_1: "💻 MacBook Pro",
+    tag_2: "🤖 Generative KI",
+    tag_3: "🔒 Cybersicherheit",
+    tag_4: "🤝 Teamführung",
+    tag_5: "📈 Quantitative Finanzen",
+    tag_6: "✈️ Luft- & Raumfahrt",
+    tag_7: "💪 Fitness",
+    tag_8: "🏚 Urbex",
+    last_updated: "Zuletzt aktualisiert",
+    footer_rights: "Alle Rechte vorbehalten."
+  },
+  hu: {
+    hero_badge: "Frissen érettségizett diák",
+    hero_title: "Szia, <span>Miszori Gergő</span> vagyok",
+    bento_about_title: "👋 Rólam",
+    hero_desc: "Szenvedélyem az informatika, a matematika és a gazdaságtudomány. Rengeteg különböző dolog foglalkoztat, és imádok csapatban dolgozni.",
+    bento_about_text: "18 éves szegedi diák vagyok. Nemrég érettségiztem a Radnóti Miklós Kísérleti Gimnázium hatosztályos speciális matematika tagozatán. Az elmúlt években mélyen elmerültem az informatika világában – részt vettem országos programozási versenyeken, dolgoztam projekteken, mint a CanSat, és még egy MI-alapú biológiai kutatásba is besegítettem. A technológiai érdeklődésemen kívül szeretek edzőterembe járni, régi épületeket felfedezni és sorozatokat nézni.",
+    bento_stats_title: "🏆 Kiemelt eredmények",
+    stat_1_label: "Digitális kultúra",
+    stat_1_sub: "emelt szintű érettségi (2025)",
+    stat_2_label: "Matematika",
+    stat_2_sub: "emelt szintű érettségi (2026)",
+    bento_lang_title: "🌐 Nyelvtudás",
+    lang_de_name: "Német",
+    lang_en_name: "Angol",
+    lang_hu_name: "Magyar",
+    lang_hu_badge: "Anyanyelv",
+    bento_interests_title: "👀 Fókusz",
+    tag_1: "💻 MacBook Pro",
+    tag_2: "🤖 Generatív AI",
+    tag_3: "🔒 Kiberbiztonság",
+    tag_4: "🤝 Csapatvezetés",
+    tag_5: "📈 Kvantitatív pénzügyek",
+    tag_6: "✈️ Repülés- és űrtechnika",
+    tag_7: "💪 Edzés",
+    tag_8: "🏚 Urbex",
+    last_updated: "Utoljára frissítve",
+    footer_rights: "Minden jog fenntartva."
+  }
+};
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('portfolio-theme-v2', next);
+}
+
+function applyLanguage(lang) {
+  const dict = TRANSLATIONS[lang] || TRANSLATIONS.en;
+  
+  document.querySelectorAll('[data-key]').forEach(el => {
+    const key = el.dataset.key;
+    if (dict[key]) el.innerHTML = dict[key];
+  });
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    const isActive = btn.dataset.lang === lang;
+    btn.classList.toggle('active', isActive);
+    btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+  });
+  localStorage.setItem('portfolio-lang-v2', lang);
+  document.documentElement.lang = lang;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('year').textContent = new Date().getFullYear();
+  
+  document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+  
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => applyLanguage(btn.dataset.lang));
+  });
+
+  const initialLang = localStorage.getItem('portfolio-lang-v2') || 'en';
+  applyLanguage(initialLang);
+
+  // Clipboard Utility Engine for Footer Social Handles
+  document.querySelectorAll('.social-item.copyable').forEach(item => {
+    item.addEventListener('click', () => {
+      const handleText = item.getAttribute('data-copy');
+      navigator.clipboard.writeText(handleText).then(() => {
+        const label = item.querySelector('span');
+        const originalText = label.textContent;
+        
+        label.textContent = 'Copied!';
+        item.style.color = 'var(--accent)';
+        
+        setTimeout(() => {
+          label.textContent = originalText;
+          item.style.color = '';
+        }, 2000);
+      }).catch(err => {
+        console.error('Could not copy string text: ', err);
+      });
+    });
+  });
+});
