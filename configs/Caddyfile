@@ -1,0 +1,71 @@
+{
+	email miszorigergo@gmail.com
+	auto_https disable_redirects
+}
+
+(header-sec) {
+	header {
+		-Server
+		-X-Powered-By
+        X-Content-Type-Options nosniff
+		X-Frame-Options SAMEORIGIN
+		Referrer-Policy strict-origin-when-cross-origin
+		Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), fullscreen=(self), interest-cohort=()"
+		Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; frame-ancestors 'self';"
+		Cross-Origin-Opener-Policy "same-origin"
+		Cross-Origin-Resource-Policy "same-origin"
+	}
+}
+
+http://gergo.miszori.hu, http://mg.nxm.hu, https://mg.nxm.hu {
+	import header-sec
+	redir https://gergo.miszori.hu/ permanent
+}
+
+https://gergo.miszori.hu {
+	import header-sec
+	header Onion-Location http://gmiszorix5ntd4wr5gyicjbapgue57gvgjr6euaf7wozeofsrbwhu2id.onion
+	root * /srv
+
+	@fallbackRedirect {
+		not path /
+		not file {path} {path}/
+	}
+	redir @fallbackRedirect https://gergo.miszori.hu/ permanent
+
+	handle {
+		file_server {
+			hide .*
+		}
+	}
+
+	handle_errors {
+		respond "{err.status_code} {err.status_text}" {err.status_code}
+	}
+}
+
+http://gmiszorix5ntd4wr5gyicjbapgue57gvgjr6euaf7wozeofsrbwhu2id.onion {
+	import header-sec
+	root * /srv
+
+	@fallbackRedirectOnion {
+		not path /
+		not file {path} {path}/
+	}
+	redir @fallbackRedirectOnion http://gmiszorix5ntd4wr5gyicjbapgue57gvgjr6euaf7wozeofsrbwhu2id.onion/ permanent
+
+	handle {
+		file_server {
+			hide .*
+		}
+	}
+
+	handle_errors {
+		respond "{err.status_code} {err.status_text}" {err.status_code}
+	}
+}
+
+:80, :443 {
+	abort
+}
