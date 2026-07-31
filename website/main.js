@@ -1,10 +1,10 @@
 const TRANSLATIONS = {
   en: {
-    hero_badge: "Recent high school graduate",
+    hero_badge: "Student - ETH Zürich CS B.Sc.",
     hero_title: "Hi, I'm <span>Gergő Miszori</span>",
     hero_desc: "Passionate about computer science, mathematics, and finance. Interested in a lot of random things. Love to work in a team.",
     bento_about_title: "👋 About Me",
-    bento_about_text: "I am an 18-year-old student currently based in Szeged. I recently graduated from Radnóti Miklós High School after completing a six-year specialized mathematics program. Over those years, I deeply explored the world of computer science—engaging in national competitive programming contests, working on projects like CanSat, and even assisting in AI-powered biology research. Outside of my tech interests, I enjoy hitting the gym, exploring old buildings, and catching up on series.",
+    bento_about_text: "I am an 18-year-old student currently based in Szeged, preparing to start my B.Sc. in Computer Science at ETH Zürich. I recently graduated from Radnóti Miklós High School after completing a six-year specialized mathematics program. Over those years, I deeply explored the world of computer science—engaging in national competitive programming contests, working on projects like CanSat, and even assisting in AI-powered biology research. Outside of my tech interests, I enjoy hitting the gym, exploring old buildings, and catching up on series.",
     bento_stats_title: "🏆 Highlights",
     stat_1_label: "Computer Science",
     stat_1_sub: "Advanced Matura (2025)",
@@ -28,11 +28,11 @@ const TRANSLATIONS = {
     footer_rights: "All rights reserved."
   },
   de: {
-    hero_badge: "Frischgebackener Gymnasiums-Absolvent",
+    hero_badge: "Student - ETH Zürich Informatik B.Sc.",
     hero_title: "Hallo, ich bin <br><span>Gergő Miszori</span>",
     hero_desc: "Begeistert von Informatik, Mathematik und Finanzen. Interessiert an vielen verschiedenen Dingen. Liebe die Arbeit im Team.",
     bento_about_title: "👋 Über mich",
-    bento_about_text: "Ich bin ein 18-jähriger Student, der derzeit in Szeged lebt. Ich habe vor kurzem das Radnóti Miklós Gymnasium nach dem Abschluss eines sechsjährigen spezialisierten Mathematikprogramms abgeschlossen. In diesen Jahren habe ich die Welt der Informatik tiefgehend erkundet – ich habe an nationalen Programmierwettbewerben teilgenommen, an Projekten wie CanSat gearbeitet und sogar bei KI-gestützter Biologieforschung assistiert. Abseits meiner technologischen Interessen gehe ich gerne ins Fitnessstudio, erkunde alte Gebäude und schaue Serien.",
+    bento_about_text: "Ich bin ein 18-jähriger Student, der derzeit in Szeged lebt und sich auf das Informatikstudium an der ETH Zürich vorbereitet. Ich habe vor kurzem das Radnóti Miklós Gymnasium nach dem Abschluss eines sechsjährigen spezialisierten Mathematikprogramms abgeschlossen. In diesen Jahren habe ich die Welt der Informatik tiefgehend erkundet – ich habe an nationalen Programmierwettbewerben teilgenommen, an Projekten wie CanSat gearbeitet und sogar bei KI-gestützter Biologieforschung assistiert. Abseits meiner technologischen Interessen gehe ich gerne ins Fitnessstudio, erkunde alte Gebäude und schaue Serien.",
     bento_stats_title: "🏆 Highlights",
     stat_1_label: "Informatik",
     stat_1_sub: "Abitur auf erhöhtem Niveau (2025)",
@@ -56,11 +56,11 @@ const TRANSLATIONS = {
     footer_rights: "Alle Rechte vorbehalten."
   },
   hu: {
-    hero_badge: "Frissen érettségizett diák",
+    hero_badge: "Hallgató - ETH Zürich Informatika B.Sc.",
     hero_title: "Szia, <span>Miszori Gergő</span> vagyok",
     bento_about_title: "👋 Rólam",
     hero_desc: "Szenvedélyem az informatika, a matematika és a gazdaságtudomány. Rengeteg különböző dolog foglalkoztat, és imádok csapatban dolgozni.",
-    bento_about_text: "18 éves szegedi diák vagyok. Nemrég érettségiztem a Radnóti Miklós Kísérleti Gimnázium hatosztályos speciális matematika tagozatán. Az elmúlt években mélyen elmerültem az informatika világában – részt vettem országos programozási versenyeken, dolgoztam projekteken, mint a CanSat, és még egy MI-alapú biológiai kutatásba is besegítettem. A technológiai érdeklődésemen kívül szeretek edzőterembe járni, régi épületeket felfedezni és sorozatokat nézni.",
+    bento_about_text: "18 éves szegedi diák vagyok. Nemrég érettségiztem a Radnóti Miklós Kísérleti Gimnázium hatosztályos speciális matematika tagozatán és jelenleg az ETH Zürich Informatika szakára készülök. Az elmúlt években mélyen elmerültem az informatika világában – részt vettem országos programozási versenyeken, dolgoztam projekteken, mint a CanSat, és még egy MI-alapú biológiai kutatásba is besegítettem. A technológiai érdeklődésemen kívül szeretek edzőterembe járni, régi épületeket felfedezni és sorozatokat nézni.",
     bento_stats_title: "🏆 Kiemelt eredmények",
     stat_1_label: "Digitális kultúra",
     stat_1_sub: "emelt szintű érettségi (2025)",
