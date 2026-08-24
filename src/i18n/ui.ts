@@ -80,7 +80,7 @@ export const ui = {
     hero_cta_github: 'GitHub ↗',
     bento_about_title: '👋 Rólam',
     bento_about_text:
-      '18 éves szegedi, hamarosan zürichi, diák vagyok, és most kezdem az ETH Zürichen az informatika alapképzést (B.Sc.). Nemrég érettségiztem a Szegedi Radnóti Miklós Kísérleti Gimnázium hatosztályos speciális matematika tagozatán. Az elmúlt években mélyen elmerültem az informatika világában – részt vettem országos programozási versenyeken, dolgoztam projekteken, mint a CanSat, és még egy MI-alapú biológiai kutatásba is besegítettem. A technológiai érdeklődésemen kívül szeretek edzőterembe járni, régi épületeket felfedezni és sorozatokat nézni.',
+      '18 éves szegedi, hamarosan zürichi, diák vagyok és most kezdem az ETH Zürichen az informatika alapképzést (B.Sc.). Nemrég érettségiztem a Szegedi Radnóti Miklós Kísérleti Gimnázium hatosztályos speciális matematika tagozatán. Az elmúlt években mélyen elmerültem az informatika világában – részt vettem országos programozási versenyeken, dolgoztam projekteken, mint a CanSat, és még egy MI-alapú biológiai kutatásba is besegítettem. A technológiai érdeklődésemen kívül szeretek edzőterembe járni, régi épületeket felfedezni és sorozatokat nézni.',
     bento_stats_title: '🏆 Kiemelt eredmények',
     stat_1_label: 'Digitális kultúra',
     stat_1_sub: 'emelt szintű érettségi (2025)',
