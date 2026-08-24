@@ -1,0 +1,95 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/theme.css';
+import Footer from '../components/Footer.astro';
+import { ui } from '../i18n/ui';
+
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: keyof typeof ui;
+  image?: string;
+}
+
+const {
+  title = 'Gergő Miszori — Portfolio',
+  description = 'The official personal website and portfolio of Gergő Miszori.',
+  image = '/favicon.png',
+  lang = 'en',
+} = Astro.props;
+
+const canonicalURL = new URL(
+  Astro.url.pathname,
+  Astro.site || 'https://gergo.miszori.hu'
+);
+const imageURL = new URL(image, Astro.site || Astro.url.origin);
+---
+
+<!doctype html>
+<html lang={lang} data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="Gergő Miszori, Miszori Gergő, Portfolio, Personal Website, CANIS"
+    />
+    <meta name="author" content="Gergő Miszori" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:site_name" content="Gergő Miszori Portfolio" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={imageURL} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageURL} />
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+
+    <script is:inline>
+      (function () {
+        const savedTheme = localStorage.getItem('portfolio-theme-v2');
+        if (savedTheme) {
+          document.documentElement.setAttribute('data-theme', savedTheme);
+        } else {
+          const userPrefersDark = window.matchMedia(
+            '(prefers-color-scheme: dark)'
+          ).matches;
+          document.documentElement.setAttribute(
+            'data-theme',
+            userPrefersDark ? 'dark' : 'light'
+          );
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <main>
+        <slot />
+      </main>
+      <Footer lang={lang} />
+    </div>
+  </body>
+</html>
+<style>
+  .page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+</style>

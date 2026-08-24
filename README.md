@@ -1,15 +1,43 @@
-# gergo.miszori.hu
+# gergo.miszori.dev
 
-A lightweight personal portfolio built using HTML5, custom CSS3, and JavaScript, utilizing AI pair-programming to accelerate development.
+A lightweight, multilingual personal portfolio built with Astro.
 
 ## 🚀 Live Demo
-- **Web:** [https://gergo.miszori.hu/](https://gergo.miszori.hu/)
-- **🧅 Tor Onion Mirror:** [http://gmiszorix5ntd4wr5gyicjbapgue57gvgjr6euaf7wozeofsrbwhu2id.onion/](http://gmiszorix5ntd4wr5gyicjbapgue57gvgjr6euaf7wozeofsrbwhu2id.onion/)
 
-## ⚙️ Infrastructure & Deployment
+- **Primary:** [https://gergo.miszori.dev](https://gergo.miszori.dev)
+- **Legacy:** [https://gergo.miszori.hu](https://gergo.miszori.hu) _(redirects to primary)_
 
-The site is fully containerized and self-hosted using **Docker Compose**:
+---
 
-- `website/` — Holds all static frontend assets.
-- `configs/` — Contains configuration files (`Caddyfile` and `torrc`).
-- `docker-compose.yml` — Orchestrates the Caddy web server and Tor daemon containers.
+## 🛠️ Evolution & Architecture
+
+The site originally started as a simple, hand-crafted static project built with vanilla **HTML, CSS, and JavaScript**.
+
+To support scaling features, cleaner maintainability, and top-tier performance, the site underwent a complete architectural rebuild:
+
+- **Framework Shift (Vanilla → Astro):** Rebuilt with Astro to enable component-driven UI, type-safe i18n routing (`en`, `de`, `hu`).
+- **Edge Hosting (Cloudflare Pages):** Migrated deployment pipeline to Cloudflare Pages for ultra-fast global edge distribution, automated git builds, and high reliability.
+- **Domain Rebrand:** Transitioned primary domain from `.hu` to `.dev` to better reflect a tech and software engineering focus.
+
+---
+
+## ⚡ Tech Stack
+
+- **Framework:** [Astro v5](https://astro.build/)
+- **Language:** TypeScript
+- **Hosting:** [Cloudflare Pages](https://pages.cloudflare.com/)
+
+---
+
+## 💻 Local Development
+
+```bash
+# Install dependencies
+pnpm install
+
+# Start local development server
+pnpm dev
+
+# Build for production
+pnpm build
+```

@@ -1,0 +1,552 @@
+---
+import { Image } from 'astro:assets';
+import gergooImg from '../assets/gergoo.webp';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ui } from '../i18n/ui';
+import ThemeToggle from '../components/ThemeToggle.astro';
+
+interface Props {
+  lang: keyof typeof ui;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang] || ui.en;
+const currentYear = new Date().getFullYear();
+---
+
+<BaseLayout
+  title="Gergő Miszori — Portfolio"
+  description="The official personal website and portfolio of Gergő Miszori."
+  lang={lang}
+>
+  <div class="glow-bg"></div>
+
+  <div class="container">
+    <header>
+      <a href={`/${lang}/`} class="brand">Gergő<span>Miszori</span></a>
+      <div class="nav-actions">
+        <div class="lang-capsule">
+          <a href="/" class={`lang-btn ${lang === 'en' ? 'active' : ''}`}>EN</a>
+          <a href="/de/" class={`lang-btn ${lang === 'de' ? 'active' : ''}`}
+            >DE</a
+          >
+          <a href="/hu/" class={`lang-btn ${lang === 'hu' ? 'active' : ''}`}
+            >HU</a
+          >
+        </div>
+        <ThemeToggle />
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-text">
+        <div class="hero-badge"><span class="dot"></span>{t.hero_badge}</div>
+        <h1 set:html={t.hero_title} />
+        <p>{t.hero_desc}</p>
+      </div>
+
+      <div class="hero-avatar">
+        <div class="avatar-glow"></div>
+        <div class="hero-avatar-inner">
+          <Image
+            src={gergooImg}
+            alt="Gergő Miszori"
+            width={480}
+            height={480}
+            quality="high"
+            loading="eager"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="bento-grid">
+      <div class="bento-card span-2">
+        <h2>{t.bento_about_title}</h2>
+        <p>{t.bento_about_text}</p>
+      </div>
+
+      <div class="bento-card">
+        <h2>{t.bento_stats_title}</h2>
+        <div class="metrics-container">
+          <div class="metric-row">
+            <div>
+              <span class="metric-label">{t.stat_1_label}</span>
+              <span class="metric-sub">{t.stat_1_sub}</span>
+            </div>
+            <span class="metric-value">100%</span>
+          </div>
+          <div class="metric-row">
+            <div>
+              <span class="metric-label">{t.stat_2_label}</span>
+              <span class="metric-sub">{t.stat_2_sub}</span>
+            </div>
+            <span class="metric-value">98%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bento-card">
+        <h2>{t.bento_lang_title}</h2>
+        <div class="lang-row">
+          <span class="lang-name">{t.lang_de_name}</span>
+          <span class="lang-badge">Goethe C1</span>
+        </div>
+        <div class="lang-row">
+          <span class="lang-name">{t.lang_en_name}</span>
+          <span class="lang-badge">Cambridge C1</span>
+        </div>
+        <div class="lang-row">
+          <span class="lang-name">{t.lang_hu_name}</span>
+          <span class="lang-badge">{t.lang_hu_badge}</span>
+        </div>
+      </div>
+
+      <div class="bento-card span-2">
+        <h2>{t.bento_interests_title}</h2>
+        <div class="interests-grid">
+          <span class="interest-tag">{t.tag_1}</span>
+          <span class="interest-tag">{t.tag_2}</span>
+          <span class="interest-tag">{t.tag_3}</span>
+          <span class="interest-tag">{t.tag_4}</span>
+          <span class="interest-tag">{t.tag_5}</span>
+          <span class="interest-tag">{t.tag_6}</span>
+          <span class="interest-tag">{t.tag_7}</span>
+          <span class="interest-tag">{t.tag_8}</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  /* Layout & Glow Background */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px;
+  }
+
+  .glow-bg {
+    position: fixed;
+    top: -10%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    z-index: -1;
+    pointer-events: none;
+    filter: blur(60px);
+  }
+
+  /* Header & Navigation */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    margin-bottom: 48px;
+    backdrop-filter: blur(16px);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--card-shadow);
+    position: sticky;
+    top: 16px;
+    z-index: 100;
+    transition: var(--transition);
+  }
+
+  .brand {
+    font-weight: 800;
+    font-size: 1.1rem;
+    text-decoration: none;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .brand span {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .lang-capsule {
+    display: flex;
+    background: var(--pill-bg);
+    border: 1px solid var(--border);
+    padding: 4px;
+    border-radius: 999px;
+  }
+
+  .lang-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-radius: 999px;
+    transition: var(--transition);
+  }
+
+  .lang-btn.active {
+    background: var(--text);
+    color: var(--bg);
+  }
+
+  /* Hero Section */
+  .hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 48px;
+    margin-bottom: 56px;
+    position: relative;
+  }
+
+  .hero-text {
+    max-width: 680px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: var(--accent-glow);
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    color: var(--text);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .hero-badge .dot {
+    width: 8px;
+    height: 8px;
+    background-color: #10b981;
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulse 2s infinite;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.3rem, 4.5vw, 3.8rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 :global(span) {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero p {
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    color: var(--text-muted);
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  /* Avatar */
+  .hero-avatar {
+    width: 240px;
+    height: 240px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    position: relative;
+    padding: 5px;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3);
+  }
+
+  .hero-avatar::before,
+  .hero-avatar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    transition: opacity var(--transition);
+  }
+
+  .hero-avatar::before {
+    background: var(--accent-gradient);
+    z-index: 1;
+  }
+
+  .hero-avatar::after {
+    background: var(--accent-gradient-alt);
+    opacity: 0;
+    z-index: 2;
+  }
+
+  .avatar-glow {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: var(--accent-gradient);
+    filter: blur(12px);
+    opacity: 0.3;
+    transition: var(--transition);
+    z-index: 0;
+  }
+
+  .hero-avatar-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--bg);
+    position: relative;
+    z-index: 3;
+  }
+
+  .hero-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+    filter: grayscale(5%) contrast(102%);
+  }
+
+  .hero-avatar:hover {
+    transform: scale(1.04) translateY(-2px);
+  }
+
+  .hero-avatar:hover::after {
+    opacity: 1;
+  }
+
+  .hero-avatar:hover .avatar-glow {
+    opacity: 0.7;
+    filter: blur(20px);
+    background: var(--accent-gradient-alt);
+  }
+
+  .hero-avatar:hover img {
+    transform: scale(1.05);
+    filter: grayscale(0%) contrast(100%);
+  }
+
+  /* Bento Grid */
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .bento-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition);
+    backdrop-filter: blur(12px);
+  }
+
+  .bento-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.15);
+  }
+
+  .bento-card.span-2 {
+    grid-column: span 2;
+  }
+
+  .bento-card h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+
+  .bento-card p {
+    color: var(--text-muted);
+    font-size: 0.98rem;
+    line-height: 1.6;
+  }
+
+  /* Metrics */
+  .metrics-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .metric-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+  }
+
+  .metric-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .metric-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  .metric-value {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .metric-sub {
+    font-size: 0.75rem;
+    color: var(--text-sub);
+    font-weight: 500;
+    display: block;
+  }
+
+  /* Language List */
+  .lang-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+    margin-bottom: 14px;
+    align-items: center;
+  }
+
+  .lang-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .lang-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .lang-badge {
+    padding: 4px 10px;
+    background: var(--pill-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--accent);
+  }
+
+  /* Interests */
+  .interests-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .interest-tag {
+    background: var(--pill-bg);
+    border: 1px solid var(--border);
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: var(--transition);
+  }
+
+  .interest-tag:hover {
+    border-color: var(--accent);
+    color: var(--text);
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 0.5;
+    }
+  }
+
+  /* Media Queries */
+  @media (max-width: 900px) {
+    header {
+      margin-bottom: 32px;
+      padding: 10px 14px;
+      top: 12px;
+    }
+
+    .brand {
+      font-size: 0.95rem;
+      gap: 4px;
+    }
+
+    .nav-actions {
+      gap: 8px;
+    }
+
+    .lang-btn {
+      padding: 4px 8px;
+      font-size: 0.75rem;
+    }
+
+    .hero {
+      flex-direction: column-reverse;
+      align-items: center;
+      text-align: center;
+      gap: 32px;
+    }
+
+    .hero-text {
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero-avatar {
+      width: 190px;
+      height: 190px;
+    }
+
+    .bento-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .bento-card.span-2 {
+      grid-column: auto;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 24px 16px;
+    }
+  }
+</style>

@@ -1,0 +1,19 @@
+---
+import LandingPage from '../../components/LandingPage.astro';
+import { ui } from '../../i18n/ui';
+
+export function getStaticPaths() {
+  const nonDefaultLocales = Object.keys(ui).filter(
+    (lang) => lang !== 'en'
+  ) as (keyof typeof ui)[];
+
+  return nonDefaultLocales.map((lang) => ({
+    params: { lang },
+    props: { lang },
+  }));
+}
+
+const { lang } = Astro.props;
+---
+
+<LandingPage {lang} />

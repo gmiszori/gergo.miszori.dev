@@ -1,0 +1,117 @@
+/* --------------------------------------------------------------------------
+   1. Resets & Base Elements
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* --------------------------------------------------------------------------
+   2. Design Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* Typography */
+  --font-sans: 'Inter Variable', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', monospace;
+
+  /* Layout & Radii */
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
+  --radius: var(--radius-md);
+
+  /* Performance-Optimized Transitions */
+  --transition-fast: 0.2s ease;
+  --transition:
+    transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease,
+    color 0.3s ease, box-shadow 0.3s ease;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --bg: #030712;
+  --surface: rgba(17, 24, 39, 0.7);
+  --surface-hover: rgba(31, 41, 55, 0.8);
+  --bg-card: rgba(18, 20, 29, 0.7);
+  --bg-card-hover: rgba(28, 32, 46, 0.85);
+
+  /* Borders & Shadows */
+  --border: rgba(255, 255, 255, 0.1);
+  --border-hover: rgba(255, 255, 255, 0.2);
+  --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+
+  /* Typography */
+  --text: #f9fafb;
+  --text-main: #f9fafb;
+  --text-muted: #8e95a5;
+  --text-sub: #6b7280;
+
+  /* Accents & Gradients */
+  --accent: #6366f1;
+  --accent-glow: rgba(99, 102, 241, 0.15);
+  --accent-gradient: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
+  --accent-gradient-alt: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  --gradient: linear-gradient(135deg, #6366f1, #a855f7);
+
+  /* Badges & Code */
+  --badge-bg: rgba(99, 102, 241, 0.08);
+  --badge-border: rgba(99, 102, 241, 0.25);
+  --code-bg: #0d1117;
+  --inline-code-bg: rgba(255, 255, 255, 0.08);
+  --pill-bg: rgba(255, 255, 255, 0.03);
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+
+  /* Surfaces */
+  --bg: #f8fafc;
+  --surface: rgba(255, 255, 255, 0.8);
+  --surface-hover: rgba(255, 255, 255, 1);
+  --bg-card: rgba(255, 255, 255, 0.8);
+  --bg-card-hover: rgba(255, 255, 255, 1);
+
+  /* Borders & Shadows */
+  --border: rgba(15, 23, 42, 0.06);
+  --border-hover: rgba(15, 23, 42, 0.12);
+  --card-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.05);
+
+  /* Typography */
+  --text: #0f172a;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-sub: #94a3b8;
+
+  /* Accents & Gradients */
+  --accent: #4f46e5;
+  --accent-glow: rgba(79, 70, 229, 0.06);
+  --accent-gradient: linear-gradient(135deg, #4f46e5 0%, #0891b2 100%);
+  --accent-gradient-alt: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);
+  --gradient: linear-gradient(135deg, #4f46e5, #9333ea);
+
+  /* Badges & Code */
+  --badge-bg: rgba(79, 70, 229, 0.05);
+  --badge-border: rgba(79, 70, 229, 0.2);
+  --code-bg: #0d1117;
+  --inline-code-bg: rgba(15, 23, 42, 0.06);
+  --pill-bg: rgba(0, 0, 0, 0.05);
+}
