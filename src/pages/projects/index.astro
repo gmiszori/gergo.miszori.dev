@@ -1,0 +1,97 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectsHeader from '../../components/ProjectsHeader.astro';
+import '/src/styles/project.css';
+
+const projects = (await getCollection('projects'))
+  .filter((p) => !p.data.draft)
+  .sort(
+    (a, b) =>
+      new Date(b.data.date ?? 0).getTime() -
+      new Date(a.data.date ?? 0).getTime()
+  );
+
+const formatDate = (date?: Date | string) => {
+  if (!date) return '';
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    timeZone: 'UTC',
+  });
+};
+---
+
+<BaseLayout
+  title="Projects — Gergő Miszori"
+  description="Projects, research, and technical write-ups by Gergő Miszori."
+>
+  <div class="container">
+    <ProjectsHeader />
+
+    <main class="summary-view">
+      <section class="hero">
+        <a href="/" class="back-home">← Main Site</a>
+        <h1>Projects & Notes</h1>
+        <p>
+          Currently a work in progress. Plan is to post summaries of old and
+          ongoing projects, along with whatever random stuff catches my
+          attention.
+        </p>
+
+        <div class="lang-notice">
+          <svg
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            ><circle cx="12" cy="12" r="10"></circle><line
+              x1="12"
+              y1="16"
+              x2="12"
+              y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg
+          >
+          <span>Only in English • Nur auf Englisch • Csak angolul</span>
+        </div>
+      </section>
+
+      <section class="projects-grid">
+        {
+          projects.length > 0 ? (
+            projects.map((p) => (
+              <a class="project-card" href={`/projects/${p.id}/`}>
+                <div>
+                  <div class="project-meta">
+                    {p.data.date && (
+                      <time datetime={p.data.date.toISOString()}>
+                        {formatDate(p.data.date)}
+                      </time>
+                    )}
+                  </div>
+                  <h2 class="project-title">{p.data.title}</h2>
+                  <p class="project-desc">{p.data.desc}</p>
+                </div>
+                <ul class="project-tags">
+                  {p.data.tags.map((t) => (
+                    <li class="tag">{t}</li>
+                  ))}
+                </ul>
+              </a>
+            ))
+          ) : (
+            <div class="empty-state">
+              <p>Nothing to show yet, check back later!</p>
+            </div>
+          )
+        }
+      </section>
+    </main>
+  </div>
+</BaseLayout>

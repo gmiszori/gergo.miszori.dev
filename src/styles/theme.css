@@ -91,7 +91,7 @@ body {
   --bg-card-hover: rgba(255, 255, 255, 1);
 
   /* Borders & Shadows */
-  --border: rgba(15, 23, 42, 0.06);
+  --border: rgba(15, 23, 42, 0.1);
   --border-hover: rgba(15, 23, 42, 0.12);
   --card-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.05);
 

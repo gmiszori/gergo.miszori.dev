@@ -1,0 +1,64 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectsHeader from '../../components/ProjectsHeader.astro';
+import '/src/styles/project.css';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', ({ data }) => {
+    return import.meta.env.PROD ? !data.draft : true;
+  });
+
+  return projects.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const formatDate = (date?: Date) => {
+  if (!date) return '';
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    timeZone: 'UTC',
+  });
+};
+---
+
+<BaseLayout
+  title={`${entry.data.title} — Gergő Miszori`}
+  description={entry.data.desc}
+>
+  <div class="container">
+    <ProjectsHeader />
+
+    <main class="article-view active">
+      <a href="/projects/" class="back-home">← Back to Projects</a>
+      <article>
+        <header class="article-header">
+          <div class="project-tags">
+            {entry.data.tags.map((t) => <span class="tag">{t}</span>)}
+          </div>
+          <h1 class="article-title">{entry.data.title}</h1>
+          {
+            entry.data.date && (
+              <div class="article-meta-row">
+                <time datetime={entry.data.date.toISOString()}>
+                  {formatDate(entry.data.date)}
+                </time>
+                <span>Gergő Miszori</span>
+              </div>
+            )
+          }
+        </header>
+        <div class="markdown-body">
+          <Content />
+        </div>
+      </article>
+    </main>
+  </div>
+</BaseLayout>

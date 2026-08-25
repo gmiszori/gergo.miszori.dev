@@ -24,4 +24,9 @@ export default defineConfig({
   adapter: cloudflare({
     imageService: 'compile',
   }),
+
+  redirects: {
+    '/hu/projects': '/projects',
+    '/de/projects': '/projects',
+  },
 });
