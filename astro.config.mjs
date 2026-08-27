@@ -3,9 +3,11 @@ import sitemap from '@astrojs/sitemap';
 
 import cloudflare from '@astrojs/cloudflare';
 
+import mdx from '@astrojs/mdx';
+
 export default defineConfig({
   site: 'https://gergo.miszori.dev',
-  integrations: [sitemap()],
+  integrations: [sitemap(), mdx()],
 
   markdown: {
     shikiConfig: {
