@@ -8,6 +8,8 @@ interface Props {
 const { lang } = Astro.props;
 const t = ui[lang] || ui.en;
 const currentYear = new Date().getFullYear();
+
+const buildDate = new Date().toISOString().split('T')[0];
 ---
 
 <footer>
@@ -60,7 +62,7 @@ const currentYear = new Date().getFullYear();
       <span>LinkedIn</span>
     </a>
   </div>
-  <p><span>{t.last_updated}</span>: 2026-08-24</p>
+  <p><span>{t.last_updated}</span>: {buildDate}</p>
   <p>© {currentYear} Gergő Miszori. <span>{t.footer_rights}</span></p>
 </footer>
 <style>
