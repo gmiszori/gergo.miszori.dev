@@ -48,8 +48,8 @@ body {
   color-scheme: dark;
 
   /* Surfaces */
-  --bg: #030712;
-  --surface: rgba(17, 24, 39, 0.7);
+  --bg: #000000;
+  --surface: #000000;
   --surface-hover: rgba(31, 41, 55, 0.8);
   --bg-card: rgba(18, 20, 29, 0.7);
   --bg-card-hover: rgba(28, 32, 46, 0.85);
@@ -84,7 +84,7 @@ body {
   color-scheme: light;
 
   /* Surfaces */
-  --bg: #f8fafc;
+  --bg: #ffffff;
   --surface: rgba(255, 255, 255, 0.8);
   --surface-hover: rgba(255, 255, 255, 1);
   --bg-card: rgba(255, 255, 255, 0.8);
