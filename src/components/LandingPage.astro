@@ -366,12 +366,21 @@ const currentYear = new Date().getFullYear();
     box-shadow: var(--card-shadow);
     transition: var(--transition);
     backdrop-filter: blur(12px);
+    -webkit-tap-highlight-color: transparent;
   }
 
-  .bento-card:hover {
-    transform: translateY(-4px);
+  @media (hover: hover) {
+    .bento-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .bento-card:active {
+    transform: translateY(-2px);
     border-color: var(--accent);
-    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.2);
   }
 
   .bento-card.span-2 {
