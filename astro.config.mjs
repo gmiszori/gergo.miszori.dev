@@ -30,5 +30,7 @@ export default defineConfig({
   redirects: {
     '/hu/projects': '/projects',
     '/de/projects': '/projects',
+    '/en/projects': '/projects',
+    '/en': '/',
   },
 });
