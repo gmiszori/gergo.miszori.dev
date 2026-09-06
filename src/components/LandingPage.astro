@@ -41,6 +41,20 @@ const t = ui[lang] || ui.en;
         <div class="hero-badge"><span class="dot"></span>{t.hero_badge}</div>
         <h1 set:html={t.hero_title} />
         <p>{t.hero_desc}</p>
+        <div class="hero-cta">
+          <a
+            href="/projects"
+            class="cta-btn primary"
+            data-key="hero_cta_projects">Projects & Notes ↗</a
+          >
+          <a
+            href="https://github.com/gmiszori"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="cta-btn secondary"
+            data-key="hero_cta_github">GitHub ↗</a
+          >
+        </div>
       </div>
 
       <div class="hero-avatar">
@@ -324,6 +338,54 @@ const t = ui[lang] || ui.en;
     filter: grayscale(0%) contrast(100%);
   }
 
+  /* --- Hero CTA Buttons --- */
+  .hero-cta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: var(--transition);
+  }
+
+  .cta-btn.primary {
+    background: var(--text-main);
+    color: var(--bg);
+    border: 1px solid var(--text-main);
+  }
+
+  .cta-btn.primary:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px -6px var(--accent);
+  }
+
+  .cta-btn.secondary {
+    background: var(--surface);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+
+  .cta-btn.secondary:hover {
+    color: var(--text-main);
+    border-color: var(--border-hover);
+    background: var(--surface-hover);
+    transform: translateY(-2px);
+  }
+
   /* Bento Grid */
   .bento-grid {
     display: grid;
@@ -524,6 +586,9 @@ const t = ui[lang] || ui.en;
   @media (max-width: 768px) {
     .container {
       padding: 24px 16px;
+    }
+    .hero-cta {
+      justify-content: center;
     }
   }
 </style>
