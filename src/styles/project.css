@@ -315,6 +315,15 @@ pre code,
   border: none !important;
 }
 
+article img, 
+.prose img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
 @media (max-width: 768px) {
   .projects-grid {
     grid-template-columns: 1fr;
