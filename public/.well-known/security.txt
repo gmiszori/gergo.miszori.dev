@@ -1,2 +1,3 @@
-Contact: mailto:miszorigergo@gmail.com
-Preferred-Languages: en
+Contact: mailto:gergo@miszori.dev
+Expires: 2027-12-31T23:59:59.000Z
+Preferred-Languages: en, de, hu
