@@ -40,7 +40,7 @@ const imageURL = new URL(image, Astro.site || Astro.url.origin);
       content="Gergő Miszori, Miszori Gergő, Portfolio, Personal Website, CANIS"
     />
     <meta name="author" content="Gergő Miszori" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <link rel="canonical" href={canonicalURL} />
 
     <!-- Open Graph / Facebook -->
@@ -52,6 +52,7 @@ const imageURL = new URL(image, Astro.site || Astro.url.origin);
     <meta property="og:image" content={imageURL} />
     <meta property="og:image:width" content="512" />
     <meta property="og:image:height" content="512" />
+    <meta property="og:locale" content="en_US" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary" />
@@ -89,6 +90,51 @@ const imageURL = new URL(image, Astro.site || Astro.url.origin);
       src="https://static.cloudflareinsights.com/beacon.min.js"
       data-cf-beacon='{"token": "c6fc7ab63a634870adf37a819b1b4107"}'
     ></script><!-- End Cloudflare Web Analytics -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://gergo.miszori.dev/#website",
+          "url": "https://gergo.miszori.dev",
+          "name": "Gergő Miszori",
+          "hasPart": [
+            { "@id": "https://gergo.miszori.dev/#webpage" },
+            { "@id": "https://gergo.miszori.dev/projects/#webpage" }
+          ]
+        },
+        {
+          "@type": "ProfilePage",
+          "@id": "https://gergo.miszori.dev/#webpage",
+          "url": "https://gergo.miszori.dev",
+          "name": "Gergő Miszori — Portfolio",
+          "isPartOf": { "@id": "https://gergo.miszori.dev/#website" },
+          "mainEntity": {
+            "@type": "Person",
+            "@id": "https://gergo.miszori.dev/#person",
+            "name": "Gergő Miszori",
+            "jobTitle": "Computer Science Student",
+            "url": "https://gergo.miszori.dev",
+            "sameAs": [
+              "https://github.com/gmiszori",
+              "https://www.linkedin.com/in/gergomiszori/",
+              "https://www.instagram.com/gergomiszori/"
+            ]
+          }
+        },
+        {
+          "@type": "CollectionPage",
+          "@id": "https://gergo.miszori.dev/projects/#webpage",
+          "url": "https://gergo.miszori.dev/projects",
+          "name": "Projects — Gergő Miszori",
+          "description": "Projects, research, and technical write-ups by Gergő Miszori.",
+          "isPartOf": { "@id": "https://gergo.miszori.dev/#website" },
+          "author": { "@id": "https://gergo.miszori.dev/#person" }
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div class="page-wrapper">
