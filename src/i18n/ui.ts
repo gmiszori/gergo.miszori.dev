@@ -16,7 +16,7 @@ export const ui = {
     hero_cta_github: 'GitHub ↗',
     bento_about_title: '👋 About Me',
     bento_about_text:
-      'I am an 18-year-old student based in Zurich, starting my B.Sc. in Computer Science at ETH. I recently graduated from Radnóti Miklós High School after completing a six-year specialized mathematics program. Over those years, I deeply explored the world of computer science – engaging in national competitive programming contests, working on projects like CanSat, and even assisting in AI-powered biology research. Outside of my tech interests, I enjoy hitting the gym, exploring old buildings, and catching up on series.',
+      'I am a student based in Zurich, pursuing my B.Sc. in Computer Science at ETH. I recently graduated from Radnóti Miklós High School after completing a six-year specialized mathematics program. Over those years, I deeply explored the world of computer science – engaging in national competitive programming contests, working on projects like CanSat, and even assisting in AI-powered biology research. Outside of my tech interests, I enjoy hitting the gym, exploring old buildings, and catching up on series.',
     bento_stats_title: '🏆 Highlights',
     stat_1_label: 'Computer Science',
     stat_1_sub: 'Advanced Matura (2025)',
@@ -48,7 +48,7 @@ export const ui = {
     hero_cta_github: 'GitHub ↗',
     bento_about_title: '👋 Über mich',
     bento_about_text:
-      'Ich bin ein 18-jähriger Student aus Zurich und beginne in Kürze mein B.Sc.-Studium in Informatik an der ETH. Ich habe vor kurzem das Radnóti Miklós Gymnasium nach dem Abschluss eines sechsjährigen spezialisierten Mathematikprogramms abgeschlossen. In diesen Jahren habe ich die Welt der Informatik tiefgehend erkundet – ich habe an nationalen Programmierwettbewerben teilgenommen, an Projekten wie CanSat gearbeitet und sogar bei KI-gestützter Biologieforschung assistiert. Abseits meiner technologischen Interessen gehe ich gerne ins Fitnessstudio, erkunde alte Gebäude und schaue Serien.',
+      'Ich bin Student an der ETH Zürich und mache dort aktuell meinen Bachelor in Informatik. Ich habe vor kurzem das Radnóti Miklós Gymnasium nach dem Abschluss eines sechsjährigen spezialisierten Mathematikprogramms abgeschlossen. In diesen Jahren habe ich die Welt der Informatik tiefgehend erkundet – ich habe an nationalen Programmierwettbewerben teilgenommen, an Projekten wie CanSat gearbeitet und sogar bei KI-gestützter Biologieforschung assistiert. Abseits meiner technologischen Interessen gehe ich gerne ins Fitnessstudio, erkunde alte Gebäude und schaue Serien.',
     bento_stats_title: '🏆 Highlights',
     stat_1_label: 'Informatik',
     stat_1_sub: 'Abitur auf erhöhtem Niveau (2025)',
@@ -80,7 +80,7 @@ export const ui = {
     hero_cta_github: 'GitHub ↗',
     bento_about_title: '👋 Rólam',
     bento_about_text:
-      '18 éves zürichi tanuló vagyok és most kezdem az ETH-n az informatika alapképzést (B.Sc.). Nemrég érettségiztem a Szegedi Radnóti Miklós Kísérleti Gimnázium hatosztályos speciális matematika tagozatán. Az elmúlt években mélyen elmerültem az informatika világában – részt vettem országos programozási versenyeken, dolgoztam projekteken, mint a CanSat, és még egy MI-alapú biológiai kutatásba is besegítettem. A technológiai érdeklődésemen kívül szeretek edzőterembe járni, régi épületeket felfedezni és sorozatokat nézni.',
+      'Az ETH Zürich informatika alapszakos hallgatója vagyok. Nemrég érettségiztem a Szegedi Radnóti Miklós Kísérleti Gimnázium hatosztályos speciális matematika tagozatán. Az elmúlt években mélyen elmerültem az informatika világában – részt vettem országos programozási versenyeken, dolgoztam projekteken, mint a CanSat, és még egy MI-alapú biológiai kutatásba is besegítettem. A technológiai érdeklődésemen kívül szeretek edzőterembe járni, régi épületeket felfedezni és sorozatokat nézni.',
     bento_stats_title: '🏆 Kiemelt eredmények',
     stat_1_label: 'Digitális kultúra',
     stat_1_sub: 'emelt szintű érettségi (2025)',
