@@ -8,10 +8,10 @@ export const defaultLang = 'en';
 
 export const ui = {
   en: {
-    hero_badge: 'Computer Science @ ETH Zürich',
-    hero_title: "Hi, I'm <span>Gergő Miszori</span>",
+    hero_badge: '',
+    hero_title: '<span>Gergő Miszori</span>',
     hero_desc:
-      'Passionate about computer science, mathematics, and finance. Interested in a lot of random things. Love to work in a team.',
+      'Computer Science @ ETH Zürich',
     hero_cta_projects: 'Projects & Notes ↗',
     hero_cta_github: 'GitHub ↗',
     bento_about_title: '👋 About Me',
@@ -41,9 +41,9 @@ export const ui = {
   },
   de: {
     hero_badge: 'Informatik @ ETH Zürich',
-    hero_title: 'Hallo, ich bin <br><span>Gergő Miszori</span>',
+    hero_title: '<span>Gergő Miszori</span>',
     hero_desc:
-      'Begeistert von Informatik, Mathematik und Finanzen. Interessiert an vielen verschiedenen Dingen. Liebe die Arbeit im Team.',
+      'Informatik @ ETH Zürich',
     hero_cta_projects: 'Projekte & Notizen (EN) ↗',
     hero_cta_github: 'GitHub ↗',
     bento_about_title: '👋 Über mich',
@@ -72,10 +72,9 @@ export const ui = {
     footer_rights: 'Alle Rechte vorbehalten.',
   },
   hu: {
-    hero_badge: 'Informatika @ ETH Zürich',
-    hero_title: 'Szia, <span>Miszori Gergő</span> vagyok',
+    hero_title: '<span>Miszori Gergő</span>',
     hero_desc:
-      'Szenvedélyem az informatika, a matematika és a gazdaságtudomány. Rengeteg különböző dolog foglalkoztat, és imádok csapatban dolgozni.',
+      'Informatika @ ETH Zürich',
     hero_cta_projects: 'Projektek & Jegyzetek (EN) ↗',
     hero_cta_github: 'GitHub ↗',
     bento_about_title: '👋 Rólam',

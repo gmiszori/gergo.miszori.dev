@@ -38,23 +38,8 @@ const t = ui[lang] || ui.en;
 
     <section class="hero">
       <div class="hero-text">
-        <div class="hero-badge"><span class="dot"></span>{t.hero_badge}</div>
         <h1 set:html={t.hero_title} />
         <p>{t.hero_desc}</p>
-        <!-- <div class="hero-cta">
-          <a
-            href="/projects"
-            class="cta-btn primary"
-            data-key="hero_cta_projects">Projects & Notes ↗</a
-          >
-          <a
-            href="https://github.com/gmiszori"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="cta-btn secondary"
-            data-key="hero_cta_github">GitHub ↗</a
-          >
-        </div> -->
       </div>
 
       <div class="hero-avatar">
@@ -206,37 +191,15 @@ const t = ui[lang] || ui.en;
 
   .hero-text {
     max-width: 680px;
+    padding: 32px;
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    background: var(--accent-glow);
-    border: 1px solid var(--accent);
-    border-radius: 999px;
-    color: var(--text);
-    font-size: 0.85rem;
-    font-weight: 600;
-    margin-bottom: 20px;
-  }
-
-  .hero-badge .dot {
-    width: 8px;
-    height: 8px;
-    background-color: #10b981;
-    border-radius: 50%;
-    display: inline-block;
-    animation: pulse 2s infinite;
-  }
-
   .hero h1 {
-    font-size: clamp(2.3rem, 4.5vw, 3.8rem);
+    font-size: clamp(2.6rem, 5.5vw, 3.8rem);
     font-weight: 900;
     letter-spacing: -0.04em;
     line-height: 1.1;
@@ -250,7 +213,7 @@ const t = ui[lang] || ui.en;
   }
 
   .hero p {
-    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
     color: var(--text-muted);
     font-weight: 400;
     line-height: 1.6;
@@ -264,6 +227,7 @@ const t = ui[lang] || ui.en;
     border-radius: 50%;
     position: relative;
     padding: 5px;
+    margin-right: 32px;
     cursor: pointer;
     transition: var(--transition);
     box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3);
@@ -538,7 +502,8 @@ const t = ui[lang] || ui.en;
       flex-direction: column-reverse;
       align-items: center;
       text-align: center;
-      gap: 32px;
+      gap: 0px;
+      margin-bottom: 0px;
     }
 
     .hero-text {
@@ -547,8 +512,9 @@ const t = ui[lang] || ui.en;
     }
 
     .hero-avatar {
-      width: 190px;
-      height: 190px;
+      width: 250px;
+      height: 250px;
+      margin-right: 0px;
     }
 
     .bento-grid {
