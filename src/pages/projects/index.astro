@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectsHeader from '../../components/ProjectsHeader.astro';
+import { formatProjectDate } from '../../utils/date';
 import '/src/styles/project.css';
 
 const projects = (await getCollection('projects'))
@@ -11,16 +12,6 @@ const projects = (await getCollection('projects'))
       new Date(b.data.date ?? 0).getTime() -
       new Date(a.data.date ?? 0).getTime()
   );
-
-const formatDate = (date?: Date | string) => {
-  if (!date) return '';
-  return new Date(date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    timeZone: 'UTC',
-  });
-};
 ---
 
 <BaseLayout
@@ -30,7 +21,7 @@ const formatDate = (date?: Date | string) => {
   <div class="container">
     <ProjectsHeader />
 
-    <main class="summary-view">
+    <div class="summary-view">
       <section class="hero">
         <a href="/" class="back-home">← Main Site</a>
         <h1>Projects & Notes</h1>
@@ -71,7 +62,7 @@ const formatDate = (date?: Date | string) => {
                   <div class="project-meta">
                     {p.data.date && (
                       <time datetime={p.data.date.toISOString()}>
-                        {formatDate(p.data.date)}
+                        {formatProjectDate(p.data.date)}
                       </time>
                     )}
                   </div>
@@ -92,6 +83,6 @@ const formatDate = (date?: Date | string) => {
           )
         }
       </section>
-    </main>
+    </div>
   </div>
 </BaseLayout>

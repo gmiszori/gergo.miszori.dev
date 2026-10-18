@@ -9,16 +9,6 @@
   width: 100%;
 }
 
-.article-view {
-  display: none;
-}
-.article-view.active {
-  display: block;
-}
-.summary-view.hidden {
-  display: none;
-}
-
 header {
   display: flex;
   justify-content: space-between;
@@ -176,19 +166,6 @@ header {
   font-family: var(--font-mono);
 }
 
-/* State Messages */
-.state-msg {
-  grid-column: 1 / -1;
-  padding: 2rem;
-  text-align: center;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-}
-
-.state-msg.error {
-  color: #ef4444;
-}
-
 .empty-state {
   grid-column: 1 / -1;
   text-align: center;
@@ -315,7 +292,7 @@ pre code,
   border: none !important;
 }
 
-article img, 
+article img,
 .prose img {
   width: 100%;
   max-width: 100%;

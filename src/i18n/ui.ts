@@ -8,12 +8,8 @@ export const defaultLang = 'en';
 
 export const ui = {
   en: {
-    hero_badge: '',
-    hero_title: '<span>Gergő Miszori</span>',
-    hero_desc:
-      'Computer Science @ ETH Zürich',
-    hero_cta_projects: 'Projects & Notes ↗',
-    hero_cta_github: 'GitHub ↗',
+    hero_title: 'Gergő Miszori',
+    hero_desc: 'Computer Science @ ETH Zürich',
     bento_about_title: '👋 About Me',
     bento_about_text:
       'I am a student based in Zurich, pursuing my B.Sc. in Computer Science at ETH. I recently graduated from Radnóti Miklós High School after completing a six-year specialized mathematics program. Over those years, I deeply explored the world of computer science – engaging in national competitive programming contests, working on projects like CanSat, and even assisting in AI-powered biology research. Outside of my tech interests, I enjoy hitting the gym, exploring old buildings, and catching up on series.',
@@ -39,12 +35,8 @@ export const ui = {
     footer_rights: 'All rights reserved.',
   },
   de: {
-    hero_badge: 'Informatik @ ETH Zürich',
-    hero_title: '<span>Gergő Miszori</span>',
-    hero_desc:
-      'Informatik @ ETH Zürich',
-    hero_cta_projects: 'Projekte & Notizen (EN) ↗',
-    hero_cta_github: 'GitHub ↗',
+    hero_title: 'Gergő Miszori',
+    hero_desc: 'Informatik @ ETH Zürich',
     bento_about_title: '👋 Über mich',
     bento_about_text:
       'Ich bin Student an der ETH Zürich und mache dort aktuell meinen Bachelor in Informatik. Ich habe vor kurzem das Radnóti Miklós Gymnasium nach dem Abschluss eines sechsjährigen spezialisierten Mathematikprogramms abgeschlossen. In diesen Jahren habe ich die Welt der Informatik tiefgehend erkundet – ich habe an nationalen Programmierwettbewerben teilgenommen, an Projekten wie CanSat gearbeitet und sogar bei KI-gestützter Biologieforschung assistiert. Abseits meiner technologischen Interessen gehe ich gerne ins Fitnessstudio, erkunde alte Gebäude und schaue Serien.',
@@ -70,11 +62,8 @@ export const ui = {
     footer_rights: 'Alle Rechte vorbehalten.',
   },
   hu: {
-    hero_title: '<span>Miszori Gergő</span>',
-    hero_desc:
-      'Informatika @ ETH Zürich',
-    hero_cta_projects: 'Projektek & Jegyzetek (EN) ↗',
-    hero_cta_github: 'GitHub ↗',
+    hero_title: 'Miszori Gergő',
+    hero_desc: 'Informatika @ ETH Zürich',
     bento_about_title: '👋 Rólam',
     bento_about_text:
       'Az ETH Zürich informatika alapszakos hallgatója vagyok. Nemrég érettségiztem a Szegedi Radnóti Miklós Kísérleti Gimnázium hatosztályos speciális matematika tagozatán. Az elmúlt években mélyen elmerültem az informatika világában – részt vettem országos programozási versenyeken, dolgoztam projekteken, mint a CanSat, és még egy MI-alapú biológiai kutatásba is besegítettem. A technológiai érdeklődésemen kívül szeretek edzőterembe járni, régi épületeket felfedezni és sorozatokat nézni.',

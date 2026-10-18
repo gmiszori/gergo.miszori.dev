@@ -9,6 +9,12 @@ export default defineConfig({
   site: 'https://gergo.miszori.dev',
   integrations: [sitemap(), mdx()],
 
+  vite: {
+    build: {
+      assetsInlineLimit: 0,
+    },
+  },
+
   markdown: {
     shikiConfig: {
       theme: 'github-dark',

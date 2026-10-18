@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import gergooImg from '../assets/gergoo.webp';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { ui } from '../i18n/ui';
+import { defaultLang, languages, ui } from '../i18n/ui';
 import ThemeToggle from '../components/ThemeToggle.astro';
 
 interface Props {
@@ -24,13 +24,17 @@ const t = ui[lang] || ui.en;
     <header>
       <div class="nav-actions">
         <div class="lang-capsule">
-          <a href="/" class={`lang-btn ${lang === 'en' ? 'active' : ''}`}>EN</a>
-          <a href="/de/" class={`lang-btn ${lang === 'de' ? 'active' : ''}`}
-            >DE</a
-          >
-          <a href="/hu/" class={`lang-btn ${lang === 'hu' ? 'active' : ''}`}
-            >HU</a
-          >
+          {
+            Object.entries(languages).map(([locale, label]) => (
+              <a
+                href={locale === defaultLang ? '/' : `/${locale}/`}
+                class:list={['lang-btn', { active: lang === locale }]}
+                aria-current={lang === locale ? 'page' : undefined}
+              >
+                {label}
+              </a>
+            ))
+          }
         </div>
         <ThemeToggle />
       </div>
@@ -38,7 +42,7 @@ const t = ui[lang] || ui.en;
 
     <section class="hero">
       <div class="hero-text">
-        <h1 set:html={t.hero_title} />
+        <h1><span>{t.hero_title}</span></h1>
         <p>{t.hero_desc}</p>
       </div>
 
@@ -145,7 +149,7 @@ const t = ui[lang] || ui.en;
   .nav-actions {
     display: flex;
     align-items: center;
-    margin-left: auto;  
+    margin-left: auto;
     gap: 16px;
   }
 
@@ -273,58 +277,10 @@ const t = ui[lang] || ui.en;
   .hero-avatar:hover {
     transform: scale(1.04) translateY(-2px);
   }
-  
+
   .hero-avatar:hover img {
     transform: scale(1.05);
     filter: grayscale(0%) contrast(100%);
-  }
-
-  /* --- Hero CTA Buttons --- */
-  .hero-cta {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 24px;
-    flex-wrap: wrap;
-  }
-
-  .cta-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 20px;
-    border-radius: 999px;
-    font-weight: 700;
-    font-size: 0.9rem;
-    text-decoration: none;
-    transition: var(--transition);
-  }
-
-  .cta-btn.primary {
-    background: var(--text-main);
-    color: var(--bg);
-    border: 1px solid var(--text-main);
-  }
-
-  .cta-btn.primary:hover {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #ffffff;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px -6px var(--accent);
-  }
-
-  .cta-btn.secondary {
-    background: var(--surface);
-    color: var(--text-muted);
-    border: 1px solid var(--border);
-  }
-
-  .cta-btn.secondary:hover {
-    color: var(--text-main);
-    border-color: var(--border-hover);
-    background: var(--surface-hover);
-    transform: translateY(-2px);
   }
 
   /* Bento Grid */
@@ -468,18 +424,6 @@ const t = ui[lang] || ui.en;
     color: var(--text);
   }
 
-  @keyframes pulse {
-    0%,
-    100% {
-      transform: scale(1);
-      opacity: 1;
-    }
-    50% {
-      transform: scale(1.2);
-      opacity: 0.5;
-    }
-  }
-
   /* Media Queries */
   @media (max-width: 900px) {
     header {
@@ -529,9 +473,6 @@ const t = ui[lang] || ui.en;
   @media (max-width: 768px) {
     .container {
       padding: 24px 16px;
-    }
-    .hero-cta {
-      justify-content: center;
     }
   }
 </style>

@@ -1,11 +1,11 @@
 ---
 import LandingPage from '../../components/LandingPage.astro';
-import { ui } from '../../i18n/ui';
+import { defaultLang, languages } from '../../i18n/ui';
 
 export function getStaticPaths() {
-  const nonDefaultLocales = Object.keys(ui).filter(
-    (lang) => lang !== 'en'
-  ) as (keyof typeof ui)[];
+  const nonDefaultLocales = (
+    Object.keys(languages) as (keyof typeof languages)[]
+  ).filter((lang) => lang !== defaultLang);
 
   return nonDefaultLocales.map((lang) => ({
     params: { lang },
