@@ -4,7 +4,7 @@ import { test } from 'node:test';
 import { runInNewContext } from 'node:vm';
 import { formatProjectDate } from '../src/utils/date.ts';
 
-const output = new URL('../dist/client/', import.meta.url);
+const output = new URL('../dist/', import.meta.url);
 const readOutput = (path) => readFileSync(new URL(path, output), 'utf8');
 const pages = [
   ['index.html', 'en', 'Gergő Miszori'],
@@ -12,6 +12,7 @@ const pages = [
   ['hu/index.html', 'hu', 'Miszori Gergő'],
   ['projects/index.html', 'en', 'Projects & Notes'],
   ['projects/my-investing-strategy/index.html', 'en', null],
+  ['404.html', 'en', 'Page not found'],
 ];
 
 for (const [path, lang, heading] of pages) {
@@ -99,11 +100,16 @@ for (const blocked of [false, true]) {
     let theme = 'dark';
     let saved;
     let click;
+    let pressed;
     runInNewContext(readOutput(bundle.slice(1)), {
       document: {
         getElementById: () => ({
           addEventListener: (_, handler) => {
             click = handler;
+          },
+          setAttribute: (name, value) => {
+            assert.equal(name, 'aria-pressed');
+            pressed = value;
           },
         }),
         documentElement: {
@@ -120,13 +126,63 @@ for (const blocked of [false, true]) {
         },
       },
     });
+    assert.equal(pressed, 'true');
     click();
     assert.equal(theme, 'light');
+    assert.equal(pressed, 'false');
     if (!blocked) assert.equal(saved, 'light');
     click();
     assert.equal(theme, 'dark');
+    assert.equal(pressed, 'true');
   });
 }
+
+const locales = {
+  'index.html': 'en_US',
+  'de/index.html': 'de_DE',
+  'hu/index.html': 'hu_HU',
+};
+for (const [path, ogLocale] of Object.entries(locales)) {
+  test(`${path}: hreflang alternates and og:locale`, () => {
+    const html = readOutput(path);
+    for (const [lang, href] of [
+      ['en', '/'],
+      ['de', '/de/'],
+      ['hu', '/hu/'],
+      ['x-default', '/'],
+    ]) {
+      assert.match(
+        html,
+        new RegExp(
+          `<link rel="alternate" hreflang="${lang}" href="https://gergo\\.miszori\\.dev${href}"`
+        )
+      );
+    }
+    assert.ok(
+      html.includes(`<meta property="og:locale" content="${ogLocale}"`)
+    );
+  });
+}
+
+test('pages share the large social preview image', () => {
+  const html = readOutput('projects/index.html');
+  assert.ok(html.includes('content="https://gergo.miszori.dev/og-image.png"'));
+  assert.ok(html.includes('content="summary_large_image"'));
+  assert.ok(!html.includes('hreflang'));
+  assert.ok(readFileSync(new URL('og-image.png', output)).length > 0);
+});
+
+test('404 page is not indexed or listed in the sitemap', () => {
+  assert.ok(readOutput('404.html').includes('content="noindex"'));
+  assert.ok(!readOutput('sitemap-0.xml').includes('404'));
+});
+
+test('legacy locale routes redirect permanently', () => {
+  const redirects = readOutput('_redirects');
+  for (const from of ['/en', '/en/projects', '/de/projects', '/hu/projects']) {
+    assert.match(redirects, new RegExp(`^${from}\\s+/\\S*\\s+301$`, 'm'));
+  }
+});
 
 test('project date formatting preserves English UTC dates and missing values', () => {
   assert.equal(formatProjectDate(), '');

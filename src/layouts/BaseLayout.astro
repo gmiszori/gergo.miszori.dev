@@ -3,27 +3,31 @@ import '@fontsource-variable/inter';
 import '@fontsource-variable/jetbrains-mono';
 import '../styles/theme.css';
 import Footer from '../components/Footer.astro';
-import { ui } from '../i18n/ui';
+import { getLocalePath, languages, ogLocales, ui } from '../i18n/ui';
 
 interface Props {
   title?: string;
   description?: string;
   lang?: keyof typeof ui;
   image?: string;
+  /** Page exists in every language; emits hreflang alternates. */
+  localized?: boolean;
+  noindex?: boolean;
 }
 
 const {
   title = 'Gergő Miszori — Portfolio',
   description = 'The official personal website and portfolio of Gergő Miszori.',
-  image = '/web-app-manifest-512x512.png',
+  image = '/og-image.png',
   lang = 'en',
+  localized = false,
+  noindex = false,
 } = Astro.props;
 
-const canonicalURL = new URL(
-  Astro.url.pathname,
-  Astro.site || 'https://gergo.miszori.dev'
-);
-const imageURL = new URL(image, Astro.site || Astro.url.origin);
+const site = Astro.site || 'https://gergo.miszori.dev';
+const canonicalURL = new URL(Astro.url.pathname, site);
+const imageURL = new URL(image, site);
+const locales = Object.keys(languages) as (keyof typeof languages)[];
 ---
 
 <!doctype html>
@@ -40,8 +44,26 @@ const imageURL = new URL(image, Astro.site || Astro.url.origin);
       content="Gergő Miszori, Gergo Miszori, Miszori Gergő, Miszori Gergo, Portfolio, Personal Website, George Miszori"
     />
     <meta name="author" content="Gergő Miszori" />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta
+      name="robots"
+      content={noindex ? 'noindex' : 'index, follow, max-image-preview:large'}
+    />
     <link rel="canonical" href={canonicalURL} />
+    {
+      localized &&
+        locales.map((locale) => (
+          <link
+            rel="alternate"
+            hreflang={locale}
+            href={new URL(getLocalePath(locale), site)}
+          />
+        ))
+    }
+    {
+      localized && (
+        <link rel="alternate" hreflang="x-default" href={new URL('/', site)} />
+      )
+    }
 
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="Gergő Miszori" />
@@ -50,12 +72,21 @@ const imageURL = new URL(image, Astro.site || Astro.url.origin);
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={imageURL} />
-    <meta property="og:image:width" content="512" />
-    <meta property="og:image:height" content="512" />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Gergő Miszori — Portfolio" />
+    <meta property="og:locale" content={ogLocales[lang]} />
+    {
+      localized &&
+        locales
+          .filter((locale) => locale !== lang)
+          .map((locale) => (
+            <meta property="og:locale:alternate" content={ogLocales[locale]} />
+          ))
+    }
 
     <!-- Twitter -->
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageURL} />
@@ -71,11 +102,12 @@ const imageURL = new URL(image, Astro.site || Astro.url.origin);
     <script is:inline src="/theme-init.js"></script>
     <!-- Cloudflare Web Analytics -->
     <script
+      is:inline
       type="module"
       src="https://static.cloudflareinsights.com/beacon.min.js"
       data-cf-beacon='{"token": "c6fc7ab63a634870adf37a819b1b4107"}'
     ></script><!-- End Cloudflare Web Analytics -->
-    <script type="application/ld+json">
+    <script is:inline type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@graph": [
@@ -103,7 +135,7 @@ const imageURL = new URL(image, Astro.site || Astro.url.origin);
               "url": "https://gergo.miszori.dev",
               "sameAs": [
                 "https://github.com/gmiszori",
-                "https://www.linkedin.com/in/gergomiszori/",
+                "https://www.linkedin.com/in/gmiszori/",
                 "https://www.instagram.com/gergomiszori/"
               ]
             }

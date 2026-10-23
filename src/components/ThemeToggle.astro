@@ -1,4 +1,10 @@
-<button class="theme-btn" id="theme-toggle" aria-label="Toggle visual theme">
+<button
+  class="theme-btn"
+  id="theme-toggle"
+  type="button"
+  aria-label="Dark theme"
+  aria-pressed="true"
+>
   <svg
     class="icon-sun"
     xmlns="http://www.w3.org/2000/svg"
@@ -29,10 +35,15 @@
 
 <script>
   const toggleBtn = document.getElementById('theme-toggle');
+  const syncPressed = (theme: string | null) =>
+    toggleBtn?.setAttribute('aria-pressed', String(theme === 'dark'));
+
+  syncPressed(document.documentElement.getAttribute('data-theme'));
   toggleBtn?.addEventListener('click', () => {
     const current = document.documentElement.getAttribute('data-theme');
     const next = current === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', next);
+    syncPressed(next);
     try {
       localStorage.setItem('portfolio-theme-v2', next);
     } catch {
@@ -45,7 +56,7 @@
   .theme-btn {
     background: transparent;
     border: 1px solid var(--border);
-    color: var(--text-main);
+    color: var(--text);
     cursor: pointer;
     width: 36px;
     height: 36px;

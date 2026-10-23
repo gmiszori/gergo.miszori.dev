@@ -6,6 +6,16 @@ export const languages = {
 
 export const defaultLang = 'en';
 
+export const ogLocales = {
+  en: 'en_US',
+  de: 'de_DE',
+  hu: 'hu_HU',
+} as const;
+
+export function getLocalePath(lang: keyof typeof languages): string {
+  return lang === defaultLang ? '/' : `/${lang}/`;
+}
+
 export const ui = {
   en: {
     hero_title: 'Gergő Miszori',

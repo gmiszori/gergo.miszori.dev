@@ -9,3 +9,38 @@ import ThemeToggle from './ThemeToggle.astro';
   </a>
   <ThemeToggle />
 </header>
+
+<style>
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .brand {
+    font-weight: 700;
+    font-size: 1.35rem;
+    color: var(--text);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .brand span {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .nav-badge {
+    font-size: 0.95rem;
+    font-family: var(--font-mono);
+    padding: 0.3rem 0.4rem;
+    border-radius: 20px;
+    background: var(--border);
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+</style>

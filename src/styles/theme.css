@@ -32,13 +32,11 @@ body {
   --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', monospace;
 
   /* Layout & Radii */
-  --radius-lg: 24px;
   --radius-md: 16px;
   --radius-sm: 12px;
   --radius: var(--radius-md);
 
   /* Performance-Optimized Transitions */
-  --transition-fast: 0.2s ease;
   --transition:
     transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease,
     color 0.3s ease, box-shadow 0.3s ease;
@@ -50,18 +48,14 @@ body {
   /* Surfaces */
   --bg: #000000;
   --surface: #000000;
-  --surface-hover: rgba(31, 41, 55, 0.8);
-  --bg-card: rgba(18, 20, 29, 0.7);
   --bg-card-hover: rgba(28, 32, 46, 0.85);
 
   /* Borders & Shadows */
   --border: rgba(255, 255, 255, 0.1);
-  --border-hover: rgba(255, 255, 255, 0.2);
   --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
 
   /* Typography */
   --text: #ffffff;
-  --text-main: #ffffff;
   --text-muted: #e0e3e9;
   --text-sub: #989fae;
 
@@ -69,7 +63,6 @@ body {
   --accent: #6366f1;
   --accent-glow: rgba(99, 102, 241, 0.15);
   --accent-gradient: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
-  --accent-gradient-alt: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
   --gradient: linear-gradient(135deg, #6366f1, #a855f7);
 
   /* Badges & Code */
@@ -86,18 +79,14 @@ body {
   /* Surfaces */
   --bg: #ffffff;
   --surface: rgba(255, 255, 255, 0.8);
-  --surface-hover: rgba(255, 255, 255, 1);
-  --bg-card: rgba(255, 255, 255, 0.8);
   --bg-card-hover: rgba(255, 255, 255, 1);
 
   /* Borders & Shadows */
   --border: rgba(15, 23, 42, 0.1);
-  --border-hover: rgba(15, 23, 42, 0.12);
   --card-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.05);
 
   /* Typography */
   --text: #000000;
-  --text-main: #000000;
   --text-muted: #2c3441;
   --text-sub: #6a7585;
 
@@ -105,7 +94,6 @@ body {
   --accent: #4f46e5;
   --accent-glow: rgba(79, 70, 229, 0.06);
   --accent-gradient: linear-gradient(135deg, #4f46e5 0%, #0891b2 100%);
-  --accent-gradient-alt: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);
   --gradient: linear-gradient(135deg, #4f46e5, #9333ea);
 
   /* Badges & Code */
@@ -114,4 +102,42 @@ body {
   --code-bg: #0d1117;
   --inline-code-bg: rgba(15, 23, 42, 0.06);
   --pill-bg: rgba(0, 0, 0, 0.05);
+}
+
+/* --------------------------------------------------------------------------
+   3. Shared Layout
+   -------------------------------------------------------------------------- */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 24px 16px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. Reduced Motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html,
+  body {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  :hover,
+  :hover *,
+  :active {
+    transform: none !important;
+  }
 }
