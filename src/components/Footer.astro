@@ -1,12 +1,4 @@
 ---
-import { ui } from '../i18n/ui';
-
-interface Props {
-  lang: keyof typeof ui;
-}
-
-const { lang } = Astro.props;
-const t = ui[lang] || ui.en;
 const currentYear = new Date().getFullYear();
 
 const buildDate = new Date().toISOString().split('T')[0];
@@ -62,8 +54,8 @@ const buildDate = new Date().toISOString().split('T')[0];
       <span>LinkedIn</span>
     </a>
   </div>
-  <p><span>{t.last_updated}</span>: {buildDate}</p>
-  <p>© {currentYear} Gergő Miszori. <span>{t.footer_rights}</span></p>
+  <p><span>Last updated</span>: {buildDate}</p>
+  <p>© {currentYear} Gergő Miszori. <span>All rights reserved.</span></p>
 </footer>
 <style>
   footer {

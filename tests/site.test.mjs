@@ -8,9 +8,7 @@ const output = new URL('../dist/', import.meta.url);
 const readOutput = (path) => readFileSync(new URL(path, output), 'utf8');
 const pages = [
   ['index.html', 'en', 'Gergő Miszori'],
-  ['de/index.html', 'de', 'Gergő Miszori'],
-  ['hu/index.html', 'hu', 'Miszori Gergő'],
-  ['projects/index.html', 'en', 'Notes & Projects'],
+  ['projects/index.html', 'en', 'Projects & Notes'],
   ['projects/my-investing-strategy/index.html', 'en', null],
   ['404.html', 'en', 'Page not found'],
 ];
@@ -137,32 +135,12 @@ for (const blocked of [false, true]) {
   });
 }
 
-const locales = {
-  'index.html': 'en_US',
-  'de/index.html': 'de_DE',
-  'hu/index.html': 'hu_HU',
-};
-for (const [path, ogLocale] of Object.entries(locales)) {
-  test(`${path}: hreflang alternates and og:locale`, () => {
-    const html = readOutput(path);
-    for (const [lang, href] of [
-      ['en', '/'],
-      ['de', '/de/'],
-      ['hu', '/hu/'],
-      ['x-default', '/'],
-    ]) {
-      assert.match(
-        html,
-        new RegExp(
-          `<link rel="alternate" hreflang="${lang}" href="https://gergo\\.miszori\\.dev${href}"`
-        )
-      );
-    }
-    assert.ok(
-      html.includes(`<meta property="og:locale" content="${ogLocale}"`)
-    );
-  });
-}
+test('English is the only locale', () => {
+  const html = readOutput('index.html');
+  assert.ok(html.includes('<meta property="og:locale" content="en_US"'));
+  assert.ok(!html.includes('hreflang'));
+  assert.ok(!html.includes('og:locale:alternate'));
+});
 
 test('pages share the large social preview image', () => {
   const html = readOutput('projects/index.html');
@@ -179,7 +157,14 @@ test('404 page is not indexed or listed in the sitemap', () => {
 
 test('legacy locale routes redirect permanently', () => {
   const redirects = readOutput('_redirects');
-  for (const from of ['/en', '/en/projects', '/de/projects', '/hu/projects']) {
+  for (const from of [
+    '/en',
+    '/en/projects',
+    '/de',
+    '/de/projects',
+    '/hu',
+    '/hu/projects',
+  ]) {
     assert.match(redirects, new RegExp(`^${from}\\s+/\\S*\\s+301$`, 'm'));
   }
 });

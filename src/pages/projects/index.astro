@@ -1,21 +1,20 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import CoverImage from '../../components/CoverImage.astro';
 import ProjectsHeader from '../../components/ProjectsHeader.astro';
 import { formatProjectDate } from '../../utils/date';
+import { getPublishedEntries, hasWriteup } from '../../utils/projects';
 import '/src/styles/project.css';
 
-const projects = (await getCollection('projects'))
-  .filter((p) => !p.data.draft)
-  .sort(
-    (a, b) =>
-      new Date(b.data.date ?? 0).getTime() -
-      new Date(a.data.date ?? 0).getTime()
-  );
+const entries = await getPublishedEntries();
+const projects = entries
+  .filter((p) => p.data.type === 'project')
+  .sort((a, b) => Number(b.data.featured) - Number(a.data.featured));
+const notes = entries.filter((p) => p.data.type === 'note');
 ---
 
 <BaseLayout
-  title="Notes & Projects — Gergő Miszori"
+  title="Projects & Notes — Gergő Miszori"
   description="Projects, research, and technical write-ups by Gergő Miszori."
 >
   <div class="container">
@@ -23,63 +22,122 @@ const projects = (await getCollection('projects'))
 
     <div class="summary-view">
       <section class="hero">
-        <a href="/" class="back-home">← Main Site</a>
-        <h1>Notes & Projects</h1>
-        <p>
-          Currently a work in progress. Plan is to post summaries of old and
-          ongoing projects, along with whatever random stuff catches my
-          attention.
-        </p>
-
-        <div class="lang-notice">
-          <svg
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            ><circle cx="12" cy="12" r="10"></circle><line
-              x1="12"
-              y1="16"
-              x2="12"
-              y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg
-          >
-          <span>Only in English • Nur auf Englisch • Csak angolul</span>
-        </div>
+        <h1>Projects & Notes</h1>
       </section>
 
-      <section class="projects-grid">
+      <section class="entry-section" aria-labelledby="projects-heading">
+        <h2 id="projects-heading" class="section-title">Projects</h2>
         {
           projects.length > 0 ? (
-            projects.map((p) => (
-              <a class="project-card" href={`/projects/${p.id}/`}>
-                <div>
-                  <div class="project-meta">
-                    {p.data.date && (
-                      <time datetime={p.data.date.toISOString()}>
-                        {formatProjectDate(p.data.date)}
-                      </time>
+            <div class="projects-grid">
+              {projects.map((p) => {
+                // Card opens the live project when there is one, otherwise the write-up
+                const external = p.data.url;
+                const href = external ?? `/projects/${p.id}/`;
+                return (
+                  <article class="project-card">
+                    {p.data.cover && (
+                      <CoverImage
+                        cover={p.data.cover}
+                        coverLight={p.data.coverLight}
+                        width={720}
+                        class="project-cover"
+                      />
                     )}
-                  </div>
-                  <h2 class="project-title">{p.data.title}</h2>
-                  <p class="project-desc">{p.data.desc}</p>
-                </div>
-                <ul class="project-tags">
-                  {p.data.tags.map((t) => (
-                    <li class="tag">{t}</li>
-                  ))}
-                </ul>
-              </a>
-            ))
-          ) : (
-            <div class="empty-state">
-              <p>Nothing to show yet, check back later!</p>
+                    <div>
+                      {p.data.date && (
+                        <div class="project-meta">
+                          <time datetime={p.data.date.toISOString()}>
+                            {formatProjectDate(p.data.date)}
+                          </time>
+                        </div>
+                      )}
+                      <div class="project-title-row">
+                        <h3 class="project-title">
+                          <a
+                            href={href}
+                            class="card-link"
+                            {...(external && {
+                              target: '_blank',
+                              rel: 'noopener noreferrer',
+                            })}
+                          >
+                            {p.data.title}
+                          </a>
+                        </h3>
+                        {p.data.status && (
+                          <span
+                            class:list={[
+                              'status',
+                              `status-${p.data.status.toLowerCase().replace(' ', '-')}`,
+                            ]}
+                          >
+                            {p.data.status}
+                          </span>
+                        )}
+                      </div>
+                      <p class="project-desc">{p.data.desc}</p>
+                    </div>
+                    {((external && hasWriteup(p)) || p.data.repo) && (
+                      <div class="project-actions">
+                        {external && hasWriteup(p) && (
+                          <a href={`/projects/${p.id}/`} class="action">
+                            Write-up
+                          </a>
+                        )}
+                        {p.data.repo && (
+                          <a
+                            href={p.data.repo}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="action"
+                          >
+                            Source ↗
+                          </a>
+                        )}
+                      </div>
+                    )}
+                  </article>
+                );
+              })}
             </div>
+          ) : (
+            <p class="empty-state">Nothing to show yet, check back later!</p>
+          )
+        }
+      </section>
+
+      <section class="entry-section" aria-labelledby="notes-heading">
+        <h2 id="notes-heading" class="section-title">Notes</h2>
+        {
+          notes.length > 0 ? (
+            <ul class="notes-list">
+              {notes.map((n) => (
+                <li>
+                  <a class="note-row" href={`/projects/${n.id}/`}>
+                    <time
+                      class="note-date"
+                      datetime={n.data.date?.toISOString()}
+                    >
+                      {formatProjectDate(n.data.date)}
+                    </time>
+                    <span class="note-body">
+                      <span class="note-title">{n.data.title}</span>
+                      {n.data.desc && (
+                        <span class="note-desc">{n.data.desc}</span>
+                      )}
+                    </span>
+                    <span class="note-tags">
+                      {n.data.tags.map((t) => (
+                        <span class="tag">{t}</span>
+                      ))}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="empty-state">Nothing to show yet, check back later!</p>
           )
         }
       </section>

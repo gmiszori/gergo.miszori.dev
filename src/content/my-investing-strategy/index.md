@@ -7,6 +7,7 @@ tags:
   - 'Personal Finance'
   - 'ETF'
 draft: false
+type: 'note'
 ---
 
 _Disclaimer: I am not a financial advisor. This article reflects my personal research and investment strategy. Always do your own research before investing._

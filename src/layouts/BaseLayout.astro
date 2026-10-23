@@ -3,15 +3,11 @@ import '@fontsource-variable/inter';
 import '@fontsource-variable/jetbrains-mono';
 import '../styles/theme.css';
 import Footer from '../components/Footer.astro';
-import { getLocalePath, languages, ogLocales, ui } from '../i18n/ui';
 
 interface Props {
   title?: string;
   description?: string;
-  lang?: keyof typeof ui;
   image?: string;
-  /** Page exists in every language; emits hreflang alternates. */
-  localized?: boolean;
   noindex?: boolean;
 }
 
@@ -19,19 +15,16 @@ const {
   title = 'Gergő Miszori — Portfolio',
   description = 'The official personal website and portfolio of Gergő Miszori.',
   image = '/og-image.png',
-  lang = 'en',
-  localized = false,
   noindex = false,
 } = Astro.props;
 
 const site = Astro.site || 'https://gergo.miszori.dev';
 const canonicalURL = new URL(Astro.url.pathname, site);
 const imageURL = new URL(image, site);
-const locales = Object.keys(languages) as (keyof typeof languages)[];
 ---
 
 <!doctype html>
-<html lang={lang} data-theme="dark">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -49,21 +42,6 @@ const locales = Object.keys(languages) as (keyof typeof languages)[];
       content={noindex ? 'noindex' : 'index, follow, max-image-preview:large'}
     />
     <link rel="canonical" href={canonicalURL} />
-    {
-      localized &&
-        locales.map((locale) => (
-          <link
-            rel="alternate"
-            hreflang={locale}
-            href={new URL(getLocalePath(locale), site)}
-          />
-        ))
-    }
-    {
-      localized && (
-        <link rel="alternate" hreflang="x-default" href={new URL('/', site)} />
-      )
-    }
 
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="Gergő Miszori" />
@@ -75,15 +53,7 @@ const locales = Object.keys(languages) as (keyof typeof languages)[];
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Gergő Miszori — Portfolio" />
-    <meta property="og:locale" content={ogLocales[lang]} />
-    {
-      localized &&
-        locales
-          .filter((locale) => locale !== lang)
-          .map((locale) => (
-            <meta property="og:locale:alternate" content={ogLocales[locale]} />
-          ))
-    }
+    <meta property="og:locale" content="en_US" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -144,7 +114,7 @@ const locales = Object.keys(languages) as (keyof typeof languages)[];
             "@type": "CollectionPage",
             "@id": "https://gergo.miszori.dev/projects/#webpage",
             "url": "https://gergo.miszori.dev/projects",
-            "name": "Notes & Projects — Gergő Miszori",
+            "name": "Projects & Notes — Gergő Miszori",
             "description": "Projects, research, and technical write-ups by Gergő Miszori.",
             "isPartOf": { "@id": "https://gergo.miszori.dev/#website" },
             "author": { "@id": "https://gergo.miszori.dev/#person" }
@@ -158,7 +128,7 @@ const locales = Object.keys(languages) as (keyof typeof languages)[];
       <main>
         <slot />
       </main>
-      <Footer lang={lang} />
+      <Footer />
     </div>
   </body>
 </html>

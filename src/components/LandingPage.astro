@@ -2,63 +2,41 @@
 import { Image } from 'astro:assets';
 import gergooImg from '../assets/gergoo.webp';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getLocalePath, languages, ui } from '../i18n/ui';
 import ThemeToggle from '../components/ThemeToggle.astro';
-import { getCollection } from 'astro:content';
+import CoverImage from './CoverImage.astro';
 import { formatProjectDate } from '../utils/date';
+import { getPublishedEntries, hasWriteup } from '../utils/projects';
 
-interface Props {
-  lang: keyof typeof ui;
-}
-
-const { lang } = Astro.props;
-const t = ui[lang] || ui.en;
-
-const [featured] = (await getCollection('projects'))
-  .filter((p) => !p.data.draft)
-  .sort(
-    (a, b) =>
-      new Date(b.data.date ?? 0).getTime() -
-      new Date(a.data.date ?? 0).getTime()
-  );
+const entries = await getPublishedEntries();
+const featured =
+  entries.find((p) => p.data.featured) ??
+  entries.find((p) => p.data.type === 'project');
+// Link to the write-up when there is one, otherwise straight to the live project
+const featuredExternal = featured && !hasWriteup(featured) && featured.data.url;
+const featuredHref = featured
+  ? featuredExternal || `/projects/${featured.id}/`
+  : undefined;
 ---
 
 <BaseLayout
   title="Gergő Miszori — Portfolio"
   description="The official personal website and portfolio of Gergő Miszori, a Computer Science student at ETH Zürich. Explore projects, engineering work, and contact info."
-  lang={lang}
-  localized
 >
   <div class="glow-bg"></div>
 
   <div class="container">
     <header>
       <div class="nav-actions">
-        <div class="lang-capsule">
-          {
-            (
-              Object.entries(languages) as [keyof typeof languages, string][]
-            ).map(([locale, label]) => (
-              <a
-                href={getLocalePath(locale)}
-                class:list={['lang-btn', { active: lang === locale }]}
-                aria-current={lang === locale ? 'page' : undefined}
-              >
-                {label}
-              </a>
-            ))
-          }
-        </div>
         <ThemeToggle />
       </div>
     </header>
 
     <section class="hero">
       <div class="hero-text">
-        <h1><span>{t.hero_title}</span></h1>
-        <p>{t.hero_desc}</p>
+        <h1><span>Gergő Miszori</span></h1>
+        <p>Computer Science @ ETH Zürich</p>
         <div class="hero-links">
-          <a href="/projects/" class="btn btn-primary">{t.cta_projects} →</a>
+          <a href="/projects/" class="btn btn-primary">View projects →</a>
           <a
             href="https://github.com/gmiszori"
             target="_blank"
@@ -94,78 +72,109 @@ const [featured] = (await getCollection('projects'))
 
     <section class="bento-grid">
       <div class="bento-card span-2">
-        <h2>{t.bento_about_title}</h2>
-        <p>{t.bento_about_text}</p>
+        <h2>👋 About Me</h2>
+        <p>
+          I am a student based in Zurich, pursuing my B.Sc. in Computer Science
+          at ETH. I recently graduated from Radnóti Miklós High School after
+          completing a six-year specialized mathematics program. Over those
+          years, I deeply explored the world of computer science – engaging in
+          national competitive programming contests, working on projects like
+          CanSat, and even assisting in AI-powered biology research.
+        </p>
       </div>
 
       <div class="bento-card">
-        <h2>{t.bento_stats_title}</h2>
+        <h2>🏆 Highlights</h2>
         <div class="metrics-container">
           <div class="metric-row">
             <div>
-              <span class="metric-label">{t.stat_1_label}</span>
-              <span class="metric-sub">{t.stat_1_sub}</span>
+              <span class="metric-label">Computer Science</span>
+              <span class="metric-sub">Advanced Matura (2025)</span>
             </div>
             <span class="metric-value">100%</span>
           </div>
           <div class="metric-row">
             <div>
-              <span class="metric-label">{t.stat_2_label}</span>
-              <span class="metric-sub">{t.stat_2_sub}</span>
+              <span class="metric-label">Mathematics</span>
+              <span class="metric-sub">Advanced Matura (2026)</span>
             </div>
             <span class="metric-value">98%</span>
           </div>
         </div>
       </div>
 
+      <div class="bento-card">
+        <h2>🌐 Languages</h2>
+        <div class="lang-row">
+          <span class="lang-name">German</span>
+          <span class="lang-badge">Goethe C1</span>
+        </div>
+        <div class="lang-row">
+          <span class="lang-name">English</span>
+          <span class="lang-badge">Cambridge C1</span>
+        </div>
+        <div class="lang-row">
+          <span class="lang-name">Hungarian</span>
+          <span class="lang-badge">Native</span>
+        </div>
+      </div>
+
       {
         featured && (
           <a
-            href={`/projects/${featured.id}/`}
-            class="bento-card span-2 is-link featured"
+            href={featuredHref}
+            class:list={[
+              'bento-card span-2 is-link featured',
+              { 'has-cover': featured.data.cover },
+            ]}
+            {...(featuredExternal && {
+              target: '_blank',
+              rel: 'noopener noreferrer',
+            })}
           >
-            <h2>{t.featured_title}</h2>
-            {featured.data.date && (
-              <time
-                class="featured-date"
-                datetime={featured.data.date.toISOString()}
-              >
-                {formatProjectDate(featured.data.date)}
-              </time>
+            <div class="featured-text">
+              <h2>🚀 Featured project</h2>
+              {featured.data.date && (
+                <time
+                  class="featured-date"
+                  datetime={featured.data.date.toISOString()}
+                >
+                  {formatProjectDate(featured.data.date)}
+                </time>
+              )}
+              <div class="featured-title-row">
+                <h3>{featured.data.title}</h3>
+                {featured.data.status && (
+                  <span class="featured-status">{featured.data.status}</span>
+                )}
+              </div>
+              <p>{featured.data.desc}</p>
+              <span class="featured-more">
+                {featuredExternal ? `Open ↗` : `Read more →`}
+              </span>
+            </div>
+            {featured.data.cover && (
+              <CoverImage
+                cover={featured.data.cover}
+                coverLight={featured.data.coverLight}
+                width={640}
+                class="featured-cover"
+              />
             )}
-            <h3>{featured.data.title}</h3>
-            <p>{featured.data.desc}</p>
-            <span class="featured-more">{t.featured_more} →</span>
           </a>
         )
       }
 
-      <div class="bento-card">
-        <h2>{t.bento_lang_title}</h2>
-        <div class="lang-row">
-          <span class="lang-name">{t.lang_de_name}</span>
-          <span class="lang-badge">Goethe C1</span>
-        </div>
-        <div class="lang-row">
-          <span class="lang-name">{t.lang_en_name}</span>
-          <span class="lang-badge">Cambridge C1</span>
-        </div>
-        <div class="lang-row">
-          <span class="lang-name">{t.lang_hu_name}</span>
-          <span class="lang-badge">{t.lang_hu_badge}</span>
-        </div>
-      </div>
-
       <div class="bento-card span-3">
-        <h2>{t.bento_interests_title}</h2>
+        <h2>👀 Interests</h2>
         <div class="interests-grid">
-          <span class="interest-tag">{t.tag_1}</span>
-          <span class="interest-tag">{t.tag_2}</span>
-          <span class="interest-tag">{t.tag_3}</span>
-          <span class="interest-tag">{t.tag_4}</span>
-          <span class="interest-tag">{t.tag_5}</span>
-          <span class="interest-tag">{t.tag_6}</span>
-          <span class="interest-tag">{t.tag_7}</span>
+          <span class="interest-tag">💻 Programming</span>
+          <span class="interest-tag">🤖 AI Security</span>
+          <span class="interest-tag">🔒 Cryptography</span>
+          <span class="interest-tag">📈 Quantitative Finance</span>
+          <span class="interest-tag">✈️ Aerospace</span>
+          <span class="interest-tag">💪 Athletics</span>
+          <span class="interest-tag">🌄 Hiking</span>
         </div>
       </div>
     </section>
@@ -199,35 +208,6 @@ const [featured] = (await getCollection('projects'))
     align-items: center;
     margin-left: auto;
     gap: 16px;
-  }
-
-  .lang-capsule {
-    display: flex;
-    background: var(--pill-bg);
-    border: 1px solid var(--border);
-    padding: 4px;
-    border-radius: 999px;
-  }
-
-  .lang-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    cursor: pointer;
-    padding: 5px 12px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    border-radius: 999px;
-    transition: var(--transition);
-  }
-
-  .lang-btn.active {
-    background: var(--text);
-    color: var(--bg);
   }
 
   /* Hero Section */
@@ -405,10 +385,56 @@ const [featured] = (await getCollection('projects'))
     text-decoration: none;
   }
 
+  .featured-text {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .featured.has-cover {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 28px;
+    align-items: stretch;
+  }
+
+  .featured :global(.featured-cover) {
+    width: 100%;
+    height: 100%;
+    min-height: 160px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+  }
+
   .featured h3 {
     font-size: 1.15rem;
     font-weight: 700;
     margin: 4px 0 8px;
+  }
+
+  .featured-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 4px 0 8px;
+  }
+
+  .featured-title-row h3 {
+    margin: 0;
+  }
+
+  .featured-status {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    padding: 2px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(34, 197, 94, 0.35);
+    background: rgba(34, 197, 94, 0.08);
+    color: #22c55e;
+    font-size: 0.75rem;
+    font-weight: 700;
   }
 
   .featured-date {
@@ -542,11 +568,6 @@ const [featured] = (await getCollection('projects'))
       gap: 8px;
     }
 
-    .lang-btn {
-      padding: 4px 8px;
-      font-size: 0.75rem;
-    }
-
     .hero {
       flex-direction: column-reverse;
       align-items: center;
@@ -578,6 +599,16 @@ const [featured] = (await getCollection('projects'))
 
     .hero-links {
       justify-content: center;
+    }
+
+    .featured.has-cover {
+      grid-template-columns: 1fr;
+    }
+
+    .featured :global(.featured-cover) {
+      order: -1;
+      aspect-ratio: 16 / 9;
+      height: auto;
     }
   }
 </style>

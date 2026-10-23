@@ -3,12 +3,15 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectsHeader from '../../components/ProjectsHeader.astro';
 import { formatProjectDate } from '../../utils/date';
+import { hasWriteup } from '../../utils/projects';
 import '/src/styles/project.css';
 
 export async function getStaticPaths() {
-  const projects = await getCollection('projects', ({ data }) => {
-    return import.meta.env.PROD ? !data.draft : true;
-  });
+  const projects = (
+    await getCollection('projects', ({ data }) => {
+      return import.meta.env.PROD ? !data.draft : true;
+    })
+  ).filter(hasWriteup);
 
   return projects.map((entry) => ({
     params: { slug: entry.id },

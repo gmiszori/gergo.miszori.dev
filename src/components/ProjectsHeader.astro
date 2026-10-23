@@ -7,7 +7,10 @@ import ThemeToggle from './ThemeToggle.astro';
     Gergő<span>Miszori</span>
     <span class="nav-badge">/projects</span>
   </a>
-  <ThemeToggle />
+  <div class="nav-actions">
+    <a href="/" class="home-link">← Main Site</a>
+    <ThemeToggle />
+  </div>
 </header>
 
 <style>
@@ -34,6 +37,29 @@ import ThemeToggle from './ThemeToggle.astro';
     -webkit-text-fill-color: transparent;
   }
 
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .home-link {
+    padding: 7px 14px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--pill-bg);
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: var(--transition);
+  }
+
+  .home-link:hover {
+    border-color: var(--accent);
+  }
+
   .nav-badge {
     font-size: 0.95rem;
     font-family: var(--font-mono);
@@ -42,5 +68,19 @@ import ThemeToggle from './ThemeToggle.astro';
     background: var(--border);
     color: var(--text-muted);
     font-weight: 500;
+  }
+
+  @media (max-width: 600px) {
+    .brand {
+      font-size: 1.15rem;
+    }
+
+    .nav-badge {
+      display: none;
+    }
+
+    .nav-actions {
+      gap: 8px;
+    }
   }
 </style>

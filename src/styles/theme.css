@@ -47,17 +47,17 @@ body {
 
   /* Surfaces */
   --bg: #000000;
-  --surface: #000000;
+  --surface: #0a0a0d;
   --bg-card-hover: rgba(28, 32, 46, 0.85);
 
   /* Borders & Shadows */
-  --border: rgba(255, 255, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.17);
   --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
 
   /* Typography */
   --text: #ffffff;
   --text-muted: #e0e3e9;
-  --text-sub: #989fae;
+  --text-sub: #a9b0be;
 
   /* Accents & Gradients */
   --accent: #6366f1;
@@ -70,7 +70,7 @@ body {
   --badge-border: rgba(99, 102, 241, 0.25);
   --code-bg: #0d1117;
   --inline-code-bg: rgba(255, 255, 255, 0.08);
-  --pill-bg: rgba(255, 255, 255, 0.03);
+  --pill-bg: rgba(255, 255, 255, 0.06);
 }
 
 [data-theme='light'] {
@@ -82,13 +82,13 @@ body {
   --bg-card-hover: rgba(255, 255, 255, 1);
 
   /* Borders & Shadows */
-  --border: rgba(15, 23, 42, 0.1);
-  --card-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.05);
+  --border: rgba(15, 23, 42, 0.18);
+  --card-shadow: 0 10px 30px -12px rgba(15, 23, 42, 0.12);
 
   /* Typography */
   --text: #000000;
-  --text-muted: #2c3441;
-  --text-sub: #6a7585;
+  --text-muted: #1f2630;
+  --text-sub: #525d6c;
 
   /* Accents & Gradients */
   --accent: #4f46e5;
@@ -101,7 +101,7 @@ body {
   --badge-border: rgba(79, 70, 229, 0.2);
   --code-bg: #0d1117;
   --inline-code-bg: rgba(15, 23, 42, 0.06);
-  --pill-bg: rgba(0, 0, 0, 0.05);
+  --pill-bg: rgba(15, 23, 42, 0.06);
 }
 
 /* --------------------------------------------------------------------------
@@ -117,6 +117,12 @@ body {
   .container {
     padding: 24px 16px;
   }
+}
+
+/* Swap theme-specific images (e.g. project thumbnails) */
+[data-theme='light'] .theme-dark-only,
+[data-theme='dark'] .theme-light-only {
+  display: none !important;
 }
 
 /* --------------------------------------------------------------------------
