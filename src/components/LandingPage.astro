@@ -167,14 +167,26 @@ const featuredHref = featured
 
       <div class="bento-card span-3">
         <h2>👀 Interests</h2>
-        <div class="interests-grid">
-          <span class="interest-tag">💻 Programming</span>
-          <span class="interest-tag">🤖 AI Security</span>
-          <span class="interest-tag">🔒 Cryptography</span>
-          <span class="interest-tag">📈 Quantitative Finance</span>
-          <span class="interest-tag">✈️ Aerospace</span>
-          <span class="interest-tag">💪 Athletics</span>
-          <span class="interest-tag">🌄 Hiking</span>
+        <div class="interest-groups">
+          <div>
+            <h3 class="interest-label">Professional</h3>
+            <div class="interests-grid">
+              <span class="interest-tag">🛡️ Cybersecurity</span>
+              <span class="interest-tag">🔒 Cryptography</span>
+              <span class="interest-tag">🖥️ Web Development</span>
+              <span class="interest-tag">🤖 AI</span>
+            </div>
+          </div>
+          <div>
+            <h3 class="interest-label">Personal</h3>
+            <div class="interests-grid">
+              <span class="interest-tag">💪 Gym</span>
+              <span class="interest-tag">🌄 Hiking</span>
+              <span class="interest-tag">🎬 Movies</span>
+              <span class="interest-tag">🍕 Food</span>
+              <span class="interest-tag">😴 Sleeping</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -533,11 +545,36 @@ const featuredHref = featured
   }
 
   /* Interests */
+  .interest-groups {
+    display: flex;
+    gap: 32px;
+  }
+
+  /* Each group takes the width its pills need, wrapping only when space runs out */
+  .interest-groups > div {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  .interest-groups > div + div {
+    padding-left: 32px;
+    border-left: 1px solid var(--border);
+  }
+
+  .interest-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-sub);
+    margin-bottom: 12px;
+  }
+
   .interests-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-top: 8px;
   }
 
   .interest-tag {
@@ -599,6 +636,16 @@ const featuredHref = featured
 
     .hero-links {
       justify-content: center;
+    }
+
+    .interest-groups {
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .interest-groups > div + div {
+      padding-left: 0;
+      border-left: none;
     }
 
     .featured.has-cover {
