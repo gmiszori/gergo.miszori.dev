@@ -10,7 +10,7 @@ const pages = [
   ['index.html', 'en', 'Gergő Miszori'],
   ['de/index.html', 'de', 'Gergő Miszori'],
   ['hu/index.html', 'hu', 'Miszori Gergő'],
-  ['projects/index.html', 'en', 'Projects & Notes'],
+  ['projects/index.html', 'en', 'Notes & Projects'],
   ['projects/my-investing-strategy/index.html', 'en', null],
   ['404.html', 'en', 'Page not found'],
 ];
