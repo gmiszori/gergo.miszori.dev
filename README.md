@@ -1,69 +1,80 @@
 # miszori.dev
 
-A lightweight, multilingual personal portfolio built with Astro.
+My personal portfolio, with a landing page and a collection of projects and notes. It is built with Astro and pre-rendered to static pages served from Cloudflare's edge, with no server code. The code was written with AI under my direction.
 
-## 🚀 Live Demo
+![Social preview of miszori.dev: name, "Computer Science @ ETH Zürich" and a profile photo](public/og-image.png)
 
-- **Primary:** [https://miszori.dev](https://miszori.dev)
-- **Legacy:** [https://gergo.miszori.dev](https://gergo.miszori.dev) and [https://gergo.miszori.hu](https://gergo.miszori.hu) _(redirect to primary)_
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![Astro](https://img.shields.io/badge/built%20with-Astro-BC52EE)
+![TypeScript](https://img.shields.io/badge/language-TypeScript-3178C6)
+![Cloudflare Workers](https://img.shields.io/badge/hosted%20on-Cloudflare%20Workers-F38020)
 
----
+## Features
 
-## 🛠️ Evolution & Architecture
+- **Projects and notes.** Each entry is a Markdown or MDX file in `src/content/`, with an optional cover image that has light and dark variants.
+- **Light and dark theme.** The theme follows the system setting and can be switched by hand. It keeps working when browser storage is blocked.
+- **Fast static pages.** Every page is pre-rendered at build time and served as a static asset, so there is nothing to run or patch on a server.
+- **Search and sharing ready.** Pages include a sitemap, structured data and a large social preview image.
+- **Old links keep working.** Legacy domains and the former `/en`, `/de` and `/hu` routes redirect permanently to the current pages.
 
-The site originally started as a simple, hand-crafted static project built with vanilla **HTML, CSS, and JavaScript**.
+## Quick start
 
-To support scaling features, cleaner maintainability, and top-tier performance, the site underwent a complete architectural rebuild:
-
-- **Framework Shift (Vanilla → Astro):** Rebuilt with Astro to enable component-driven UI, type-safe i18n routing (`en`, `de`, `hu`).
-- **Edge Hosting (Cloudflare Workers):** Every page is pre-rendered and deployed as an assets-only Worker (no server code), configured in [wrangler.jsonc](wrangler.jsonc).
-- **Domain Rebrand:** Transitioned primary domain from `.hu` to `.dev` to better reflect a tech and software engineering focus, then from `gergo.miszori.dev` to the apex `miszori.dev`, with individual projects on `*.miszori.dev` subdomains.
-
----
-
-## ⚡ Tech Stack
-
-- **Framework:** [Astro v7](https://astro.build/)
-- **Language:** TypeScript
-- **Hosting:** [Cloudflare Workers](https://workers.cloudflare.com/)
-
----
-
-## 💻 Local Development
+You need Node.js 22.12 or later and pnpm.
 
 ```bash
-# Install dependencies
 pnpm install
-
-# Start local development server
-pnpm dev
-
-# Build for production
-pnpm build
-
-# Type-check
-pnpm check
-
-# Build and deploy to Cloudflare
-pnpm deploy
 ```
 
-## Security & Maintenance
+```bash
+pnpm dev
+```
 
-- Security remediation updates Astro to 7.4.0, Sharp to 0.35.5, Wrangler to 4.151.1, and sitemap support to 3.7.4, within their existing major versions. The lockfile also refreshes vulnerable transitive packages (`js-yaml`, `svgo`, `undici`, `devalue`, `http-cache-semantics`, `source-map-js`, `smol-toml`, and `fast-uri`). Run `pnpm audit` to recheck current advisories; a clean audit is not proof that the application has no vulnerabilities.
-- [Security headers](public/_headers) apply to every response, including the custom 404 page, because the site is served entirely as static assets. Legacy locale routes redirect via [public/_redirects](public/_redirects).
-- Executable scripts are external: [the synchronous theme initializer](public/theme-init.js) runs before rendering, and [the build configuration](astro.config.mjs) disables automatic asset inlining. The CSP disallows inline JavaScript and event handlers, base URL changes, embedded objects, framing, and form submissions. Cloudflare Web Analytics remains allowed.
-- Inline styles remain allowed for Markdown content and syntax highlighting. Translation strings are rendered as escaped text rather than raw HTML.
-- Theme selection accepts only `light` or `dark` and continues working if browser storage is unavailable.
-- Locale navigation and localized routes use [the shared language map](src/i18n/ui.ts). Project pages share [UTC date formatting](src/utils/date.ts).
-- Run `pnpm test` to build and run the Node regression tests in [tests/site.test.mjs](tests/site.test.mjs): generated routes, languages, hreflang alternates, social preview metadata, the 404 page, redirects, single main landmarks, external script delivery, security headers, theme storage failures, and UTC date formatting. No additional test dependencies are required.
-- TypeScript is pinned to 5.x because `@astrojs/check` does not support TypeScript 7 yet; `pnpm check` should report no errors, warnings or hints.
+Open http://localhost:4321.
 
----
+Run the tests with:
 
-## 📄 License
+```bash
+pnpm test
+```
 
-- **Code:** the source code is released under the [MIT License](LICENSE).
-- **Content & design:** articles, images, brand assets, stylesheets and the site's visual design are **All Rights Reserved** and are not covered by the MIT License. See [LICENSE](LICENSE) for exactly what is excluded.
+It builds the site and runs the Node regression tests in [tests/site.test.mjs](tests/site.test.mjs). They cover the generated routes, social preview metadata, the 404 page, redirects, script delivery, security headers and theme storage failures. Type-check with `pnpm check`.
 
-Feel free to learn from or reuse the code, but please replace all content and design with your own.
+## How it works
+
+```
+Browser ─► Cloudflare edge ─► static assets (dist/)
+```
+
+| Directory | What |
+|-----------|------|
+| `src/pages/` | Routes: the landing page, the projects list, one page per entry, and the 404 page. |
+| `src/content/` | Projects and notes, one folder per entry with its `index.md` and images. |
+| `src/components/`, `src/layouts/` | Astro components and the shared page layout. |
+| `src/styles/` | Theme tokens and project page styles. |
+| `public/` | Files copied as they are: icons, the social preview image, the theme initializer, [`_headers`](public/_headers) and [`_redirects`](public/_redirects). |
+| `tests/` | Node regression tests that run against the built site. |
+
+## Deploying
+
+The site is an assets-only Cloudflare Worker, configured in [wrangler.jsonc](wrangler.jsonc). It serves `miszori.dev`, and keeps `gergo.miszori.dev` attached so a Cloudflare Redirect Rule can send it to `miszori.dev`.
+
+1. Sign in to Cloudflare with `pnpm wrangler login`.
+2. Build and deploy:
+   ```bash
+   pnpm deploy
+   ```
+
+To update, run `pnpm deploy` again. There is no server state, so a deploy loses nothing.
+
+## Security
+
+- **Security headers on every response.** [public/_headers](public/_headers) sets HSTS, a strict Content Security Policy and framing protection. They also apply to the 404 page, because everything is a static asset.
+- **No inline JavaScript.** The CSP blocks inline scripts and event handlers, base URL changes, embedded objects, framing and form submissions. Scripts are external files, and [the build configuration](astro.config.mjs) turns off asset inlining so this holds. Only Cloudflare Web Analytics is allowed from outside the site.
+- **Escaped text.** Strings are rendered as escaped text, not raw HTML. Inline styles stay allowed because Markdown content and syntax highlighting need them.
+- **Validated theme input.** The theme setting accepts only `light` or `dark`, so stored values can't inject anything.
+
+Run `pnpm audit` after updating dependencies. A clean audit does not prove the site has no vulnerabilities. TypeScript is pinned to 5.x because `@astrojs/check` doesn't support TypeScript 7 yet.
+
+## License
+
+The code is [MIT](LICENSE). The content, images and visual design are all rights reserved; [LICENSE](LICENSE) lists exactly what that covers.
