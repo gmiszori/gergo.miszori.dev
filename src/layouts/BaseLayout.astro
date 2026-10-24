@@ -12,8 +12,8 @@ interface Props {
 }
 
 const {
-  title = 'Gergő Miszori — Portfolio',
-  description = 'The official personal website and portfolio of Gergő Miszori.',
+  title = 'Gergő Miszori',
+  description = 'The website of Gergő Miszori.',
   image = '/og-image.png',
   noindex = false,
 } = Astro.props;
@@ -34,7 +34,7 @@ const imageURL = new URL(image, site);
     <meta name="description" content={description} />
     <meta
       name="keywords"
-      content="Gergő Miszori, Gergo Miszori, Miszori Gergő, Miszori Gergo, Portfolio, Personal Website, George Miszori"
+      content="Gergő Miszori, Gergo Miszori, Miszori Gergő, Miszori Gergo, Personal Website, George Miszori"
     />
     <meta name="author" content="Gergő Miszori" />
     <meta
@@ -52,7 +52,7 @@ const imageURL = new URL(image, site);
     <meta property="og:image" content={imageURL} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Gergő Miszori — Portfolio" />
+    <meta property="og:image:alt" content="Gergő Miszori" />
     <meta property="og:locale" content="en_US" />
 
     <!-- Twitter -->
@@ -95,7 +95,7 @@ const imageURL = new URL(image, site);
             "@type": "ProfilePage",
             "@id": "https://miszori.dev/#webpage",
             "url": "https://miszori.dev",
-            "name": "Gergő Miszori — Portfolio",
+            "name": "Gergő Miszori",
             "isPartOf": { "@id": "https://miszori.dev/#website" },
             "mainEntity": {
               "@type": "Person",

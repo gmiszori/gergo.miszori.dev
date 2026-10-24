@@ -1,6 +1,6 @@
 # miszori.dev
 
-My personal portfolio, with a landing page and a collection of projects and notes. It is built with Astro and pre-rendered to static pages served from Cloudflare's edge, with no server code. The code was written with AI under my direction.
+My personal website, with a landing page and a collection of projects and notes. It is built with Astro and pre-rendered to static pages served from Cloudflare's edge, with no server code. The code was written with AI under my direction.
 
 ![Social preview of miszori.dev: name, "Computer Science @ ETH Zürich" and a profile photo](public/og-image.png)
 
