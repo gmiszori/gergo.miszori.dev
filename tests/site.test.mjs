@@ -144,7 +144,7 @@ test('English is the only locale', () => {
 
 test('pages share the large social preview image', () => {
   const html = readOutput('projects/index.html');
-  assert.ok(html.includes('content="https://gergo.miszori.dev/og-image.png"'));
+  assert.ok(html.includes('content="https://miszori.dev/og-image.png"'));
   assert.ok(html.includes('content="summary_large_image"'));
   assert.ok(!html.includes('hreflang'));
   assert.ok(readFileSync(new URL('og-image.png', output)).length > 0);

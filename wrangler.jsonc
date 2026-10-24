@@ -8,6 +8,11 @@
   },
   "routes": [
     {
+      "pattern": "miszori.dev",
+      "custom_domain": true,
+    },
+    // Legacy host: kept attached so a Cloudflare Redirect Rule can 301 it to miszori.dev
+    {
       "pattern": "gergo.miszori.dev",
       "custom_domain": true,
     },

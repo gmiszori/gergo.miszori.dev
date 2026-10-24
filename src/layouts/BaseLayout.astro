@@ -18,7 +18,7 @@ const {
   noindex = false,
 } = Astro.props;
 
-const site = Astro.site || 'https://gergo.miszori.dev';
+const site = Astro.site || 'https://miszori.dev';
 const canonicalURL = new URL(Astro.url.pathname, site);
 const imageURL = new URL(image, site);
 ---
@@ -83,26 +83,26 @@ const imageURL = new URL(image, site);
         "@graph": [
           {
             "@type": "WebSite",
-            "@id": "https://gergo.miszori.dev/#website",
-            "url": "https://gergo.miszori.dev",
+            "@id": "https://miszori.dev/#website",
+            "url": "https://miszori.dev",
             "name": "Gergő Miszori",
             "hasPart": [
-              { "@id": "https://gergo.miszori.dev/#webpage" },
-              { "@id": "https://gergo.miszori.dev/projects/#webpage" }
+              { "@id": "https://miszori.dev/#webpage" },
+              { "@id": "https://miszori.dev/projects/#webpage" }
             ]
           },
           {
             "@type": "ProfilePage",
-            "@id": "https://gergo.miszori.dev/#webpage",
-            "url": "https://gergo.miszori.dev",
+            "@id": "https://miszori.dev/#webpage",
+            "url": "https://miszori.dev",
             "name": "Gergő Miszori — Portfolio",
-            "isPartOf": { "@id": "https://gergo.miszori.dev/#website" },
+            "isPartOf": { "@id": "https://miszori.dev/#website" },
             "mainEntity": {
               "@type": "Person",
-              "@id": "https://gergo.miszori.dev/#person",
+              "@id": "https://miszori.dev/#person",
               "name": "Gergő Miszori",
               "jobTitle": "Computer Science Student",
-              "url": "https://gergo.miszori.dev",
+              "url": "https://miszori.dev",
               "sameAs": [
                 "https://github.com/gmiszori",
                 "https://www.linkedin.com/in/gmiszori/",
@@ -112,12 +112,12 @@ const imageURL = new URL(image, site);
           },
           {
             "@type": "CollectionPage",
-            "@id": "https://gergo.miszori.dev/projects/#webpage",
-            "url": "https://gergo.miszori.dev/projects",
+            "@id": "https://miszori.dev/projects/#webpage",
+            "url": "https://miszori.dev/projects",
             "name": "Projects & Notes — Gergő Miszori",
             "description": "Projects, research, and technical write-ups by Gergő Miszori.",
-            "isPartOf": { "@id": "https://gergo.miszori.dev/#website" },
-            "author": { "@id": "https://gergo.miszori.dev/#person" }
+            "isPartOf": { "@id": "https://miszori.dev/#website" },
+            "author": { "@id": "https://miszori.dev/#person" }
           }
         ]
       }

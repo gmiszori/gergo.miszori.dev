@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 
 export default defineConfig({
-  site: 'https://gergo.miszori.dev',
+  site: 'https://miszori.dev',
   integrations: [sitemap(), mdx()],
 
   vite: {

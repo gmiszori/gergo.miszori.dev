@@ -1,11 +1,11 @@
-# gergo.miszori.dev
+# miszori.dev
 
 A lightweight, multilingual personal portfolio built with Astro.
 
 ## 🚀 Live Demo
 
-- **Primary:** [https://gergo.miszori.dev](https://gergo.miszori.dev)
-- **Legacy:** [https://gergo.miszori.hu](https://gergo.miszori.hu) _(redirects to primary)_
+- **Primary:** [https://miszori.dev](https://miszori.dev)
+- **Legacy:** [https://gergo.miszori.dev](https://gergo.miszori.dev) and [https://gergo.miszori.hu](https://gergo.miszori.hu) _(redirect to primary)_
 
 ---
 
@@ -17,7 +17,7 @@ To support scaling features, cleaner maintainability, and top-tier performance, 
 
 - **Framework Shift (Vanilla → Astro):** Rebuilt with Astro to enable component-driven UI, type-safe i18n routing (`en`, `de`, `hu`).
 - **Edge Hosting (Cloudflare Workers):** Every page is pre-rendered and deployed as an assets-only Worker (no server code), configured in [wrangler.jsonc](wrangler.jsonc).
-- **Domain Rebrand:** Transitioned primary domain from `.hu` to `.dev` to better reflect a tech and software engineering focus.
+- **Domain Rebrand:** Transitioned primary domain from `.hu` to `.dev` to better reflect a tech and software engineering focus, then from `gergo.miszori.dev` to the apex `miszori.dev`, with individual projects on `*.miszori.dev` subdomains.
 
 ---
 
