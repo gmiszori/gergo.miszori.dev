@@ -58,3 +58,12 @@ pnpm deploy
 - Locale navigation and localized routes use [the shared language map](src/i18n/ui.ts). Project pages share [UTC date formatting](src/utils/date.ts).
 - Run `pnpm test` to build and run the Node regression tests in [tests/site.test.mjs](tests/site.test.mjs): generated routes, languages, hreflang alternates, social preview metadata, the 404 page, redirects, single main landmarks, external script delivery, security headers, theme storage failures, and UTC date formatting. No additional test dependencies are required.
 - TypeScript is pinned to 5.x because `@astrojs/check` does not support TypeScript 7 yet; `pnpm check` should report no errors, warnings or hints.
+
+---
+
+## 📄 License
+
+- **Code:** the source code is released under the [MIT License](LICENSE).
+- **Content & design:** articles, images, brand assets, stylesheets and the site's visual design are **All Rights Reserved** and are not covered by the MIT License. See [LICENSE](LICENSE) for exactly what is excluded.
+
+Feel free to learn from or reuse the code, but please replace all content and design with your own.
