@@ -68,7 +68,6 @@
   padding: 1.75rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   text-decoration: none;
   color: inherit;
   transition: var(--transition);
@@ -137,7 +136,9 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-top: 1.5rem;
+  /* Pin actions to the card bottom; the text stays right under the cover */
+  margin-top: auto;
+  padding-top: 1.5rem;
 }
 
 .action {
