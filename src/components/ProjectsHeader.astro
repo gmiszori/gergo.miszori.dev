@@ -4,7 +4,7 @@ import ThemeToggle from './ThemeToggle.astro';
 
 <header>
   <a href="/" class="brand">
-    Gergő<span>Miszori</span>
+    <span class="brand-accent">miszori.dev</span>
     <span class="nav-badge">/projects</span>
   </a>
   <div class="nav-actions">
@@ -31,8 +31,8 @@ import ThemeToggle from './ThemeToggle.astro';
     gap: 0.5rem;
   }
 
-  .brand span {
-    background: var(--gradient);
+  .brand-accent {
+    background: var(--accent-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }

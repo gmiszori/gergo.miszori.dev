@@ -63,7 +63,6 @@ body {
   --accent: #6366f1;
   --accent-glow: rgba(99, 102, 241, 0.15);
   --accent-gradient: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
-  --gradient: linear-gradient(135deg, #6366f1, #a855f7);
 
   /* Badges & Code */
   --badge-bg: rgba(99, 102, 241, 0.08);
@@ -94,7 +93,6 @@ body {
   --accent: #4f46e5;
   --accent-glow: rgba(79, 70, 229, 0.06);
   --accent-gradient: linear-gradient(135deg, #4f46e5 0%, #0891b2 100%);
-  --gradient: linear-gradient(135deg, #4f46e5, #9333ea);
 
   /* Badges & Code */
   --badge-bg: rgba(79, 70, 229, 0.05);
