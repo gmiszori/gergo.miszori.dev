@@ -16,3 +16,8 @@ export async function getPublishedEntries(): Promise<Entry[]> {
 export function hasWriteup(entry: Entry): boolean {
   return Boolean(entry.body?.trim());
 }
+
+// Projects are called by their short name: vault.miszori.dev → vault
+export function shortName(entry: Entry): string {
+  return entry.data.title.replace(/\.miszori\.dev$/, '');
+}

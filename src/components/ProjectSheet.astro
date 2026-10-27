@@ -1,0 +1,172 @@
+---
+import CoverImage from './CoverImage.astro';
+import { hasWriteup, shortName, type Entry } from '../utils/projects';
+
+interface Props {
+  entry: Entry;
+  // Position in the stack: each sheet sticks 14px lower than the one before
+  index: number;
+}
+
+const { entry, index } = Astro.props;
+const { url, color, status, desc, cover, coverLight } = entry.data;
+const name = shortName(entry);
+// Open the live project when there is one, otherwise the write-up
+const href = url ?? (hasWriteup(entry) ? `/notes/${entry.id}/` : undefined);
+const external = Boolean(url);
+---
+
+<a
+  href={href}
+  class:list={['sheet', `sheet--${color}`]}
+  style={`--i: ${index}`}
+  {...external && { target: '_blank', rel: 'noopener noreferrer' }}
+>
+  <div class="sheet-in">
+    <div class="sheet-text">
+      <div class="sheet-title-row">
+        <h3 class="sheet-title">{name}</h3>
+        {status && <span class="sheet-status">{status.toLowerCase()}</span>}
+      </div>
+      {desc && <p class="sheet-desc">{desc}</p>}
+      <span class="sheet-cta">Open {name}{external ? ' ↗' : ' →'}</span>
+    </div>
+    {
+      cover && (
+        <div class="sheet-pic">
+          <CoverImage cover={cover} coverLight={coverLight} width={640} />
+        </div>
+      )
+    }
+  </div>
+</a>
+
+<style>
+  .sheet {
+    --fill: var(--blue);
+    --ink: var(--blue-ink);
+    --body: var(--blue-text);
+    position: sticky;
+    top: calc(24px + var(--i, 0) * 14px);
+    display: block;
+    height: var(--sheet-height);
+    padding: 28px;
+    border-radius: var(--radius-sheet);
+    background: var(--fill);
+    color: var(--body);
+    box-shadow: var(--sheet-ring);
+  }
+
+  .sheet--orange {
+    --fill: var(--orange);
+    --ink: var(--orange-ink);
+    --body: var(--orange-text);
+  }
+  .sheet--violet {
+    --fill: var(--violet);
+    --ink: var(--violet-ink);
+    --body: var(--violet-text);
+  }
+  .sheet--teal {
+    --fill: var(--teal);
+    --ink: var(--teal-ink);
+    --body: var(--teal-text);
+  }
+  .sheet--green {
+    --fill: var(--green);
+    --ink: var(--green-ink);
+    --body: var(--green-text);
+  }
+  .sheet--lime {
+    --fill: var(--lime);
+    --ink: var(--lime-ink);
+    --body: var(--lime-text);
+  }
+  .sheet--yellow {
+    --fill: var(--yellow);
+    --ink: var(--yellow-ink);
+    --body: var(--yellow-text);
+  }
+  .sheet--pink {
+    --fill: var(--pink);
+    --ink: var(--pink-ink);
+    --body: var(--pink-text);
+  }
+
+  .sheet-in {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    gap: 32px;
+    height: 100%;
+  }
+
+  .sheet-text {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .sheet-title-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: baseline;
+    color: var(--ink);
+  }
+
+  .sheet-title {
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 0.95;
+  }
+
+  .sheet-status {
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+
+  .sheet-desc {
+    font-size: 1.05rem;
+    line-height: 1.5;
+    max-width: 30em;
+  }
+
+  .sheet-cta {
+    margin-top: auto;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .sheet:hover .sheet-cta {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .sheet-pic {
+    border-radius: var(--radius-picture);
+    overflow: hidden;
+  }
+
+  .sheet-pic :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 760px) {
+    .sheet {
+      height: auto;
+      min-height: 220px;
+    }
+
+    .sheet-in {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .sheet-pic {
+      display: none;
+    }
+  }
+</style>

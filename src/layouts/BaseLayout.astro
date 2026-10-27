@@ -1,5 +1,5 @@
 ---
-import '@fontsource-variable/inter';
+import '@fontsource-variable/instrument-sans';
 import '@fontsource-variable/jetbrains-mono';
 import '../styles/theme.css';
 import Footer from '../components/Footer.astro';
@@ -86,10 +86,7 @@ const imageURL = new URL(image, site);
             "@id": "https://miszori.dev/#website",
             "url": "https://miszori.dev",
             "name": "Gergő Miszori",
-            "hasPart": [
-              { "@id": "https://miszori.dev/#webpage" },
-              { "@id": "https://miszori.dev/projects/#webpage" }
-            ]
+            "hasPart": [{ "@id": "https://miszori.dev/#webpage" }]
           },
           {
             "@type": "ProfilePage",
@@ -109,15 +106,6 @@ const imageURL = new URL(image, site);
                 "https://www.instagram.com/gergomiszori/"
               ]
             }
-          },
-          {
-            "@type": "CollectionPage",
-            "@id": "https://miszori.dev/projects/#webpage",
-            "url": "https://miszori.dev/projects",
-            "name": "Projects & Notes — Gergő Miszori",
-            "description": "Projects, research, and technical write-ups by Gergő Miszori.",
-            "isPartOf": { "@id": "https://miszori.dev/#website" },
-            "author": { "@id": "https://miszori.dev/#person" }
           }
         ]
       }

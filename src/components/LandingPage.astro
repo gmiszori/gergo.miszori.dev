@@ -2,660 +2,271 @@
 import { Image } from 'astro:assets';
 import gergooImg from '../assets/gergoo.webp';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ThemeToggle from '../components/ThemeToggle.astro';
-import CoverImage from './CoverImage.astro';
+import SiteHeader from './SiteHeader.astro';
+import ProjectSheet from './ProjectSheet.astro';
 import { formatProjectDate } from '../utils/date';
-import { getPublishedEntries, hasWriteup } from '../utils/projects';
+import { getPublishedEntries } from '../utils/projects';
 
 const entries = await getPublishedEntries();
-const featured =
-  entries.find((p) => p.data.featured) ??
-  entries.find((p) => p.data.type === 'project');
-// Link to the write-up when there is one, otherwise straight to the live project
-const featuredExternal = featured && !hasWriteup(featured) && featured.data.url;
-const featuredHref = featured
-  ? featuredExternal || `/projects/${featured.id}/`
-  : undefined;
+const projects = entries
+  .filter((p) => p.data.type === 'project')
+  .sort((a, b) => Number(b.data.featured) - Number(a.data.featured));
+const notes = entries.filter((p) => p.data.type === 'note');
+const live = projects.filter((p) => p.data.status === 'Live').length;
 ---
 
 <BaseLayout
   title="Gergő Miszori"
-  description="The website of Gergő Miszori, a Computer Science student at ETH Zürich. Explore projects, engineering work, and contact info."
+  description="The website of Gergő Miszori, a Computer Science student at ETH Zürich: projects, notes and contact."
 >
-  <div class="glow-bg"></div>
-
   <div class="container">
-    <header>
-      <div class="nav-actions">
-        <ThemeToggle />
-      </div>
-    </header>
+    <SiteHeader />
 
-    <section class="hero">
-      <div class="hero-text">
-        <h1><span>Gergő Miszori</span></h1>
-        <p>Computer Science @ ETH Zürich</p>
-        <div class="hero-links">
-          <a href="/projects/" class="btn btn-primary">View projects →</a>
-          <a
-            href="https://github.com/gmiszori"
-            target="_blank"
-            rel="me noopener noreferrer"
-            class="btn"
-          >
-            GitHub
-          </a>
-          <a
-            href="https://www.linkedin.com/in/gmiszori/"
-            target="_blank"
-            rel="me noopener noreferrer"
-            class="btn"
-          >
-            LinkedIn
-          </a>
-        </div>
+    <section class="hero" aria-label="Introduction">
+      <div class="hero-id">
+        <Image
+          src={gergooImg}
+          alt="Gergő Miszori"
+          width={336}
+          height={336}
+          quality="high"
+          loading="eager"
+          class="hero-photo"
+        />
+        <h1 class="hero-name">Gergő<br />Miszori</h1>
       </div>
-
-      <div class="hero-avatar">
-        <div class="hero-avatar-inner">
-          <Image
-            src={gergooImg}
-            alt="Gergő Miszori"
-            width={480}
-            height={480}
-            quality="high"
-            loading="eager"
-          />
-        </div>
+      <p class="hero-lede">Computer Science at ETH Zürich.</p>
+      <div class="hero-links">
+        <a
+          class="tlink"
+          href="https://github.com/gmiszori"
+          target="_blank"
+          rel="me noopener noreferrer">GitHub ↗</a
+        >
+        <a
+          class="tlink"
+          href="https://www.linkedin.com/in/gmiszori/"
+          target="_blank"
+          rel="me noopener noreferrer">LinkedIn ↗</a
+        >
+        <a class="tlink" href="mailto:gergo@miszori.dev">gergo@miszori.dev</a>
       </div>
     </section>
 
-    <section class="bento-grid">
-      <div class="bento-card span-2">
-        <h2>👋 About Me</h2>
-        <p>
-          I am a student based in Zurich, pursuing my B.Sc. in Computer Science
-          at ETH. I recently graduated from Radnóti Miklós High School after
-          completing a six-year specialized mathematics program. Over those
-          years, I deeply explored the world of computer science – engaging in
-          national competitive programming contests, working on projects like
-          CanSat, and even assisting in AI-powered biology research.
+    {
+      projects.length > 0 && (
+        <section id="projects" class="block" aria-labelledby="projects-heading">
+          <div class="section-head">
+            <h2 id="projects-heading" class="section-title">
+              Projects
+            </h2>
+            {live > 0 && <span class="section-count">{live} live</span>}
+          </div>
+          <div class="sheets">
+            {projects.map((p, i) => (
+              <ProjectSheet entry={p} index={i} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    {
+      notes.length > 0 && (
+        <section id="notes" class="block" aria-labelledby="notes-heading">
+          <div class="section-head">
+            <h2 id="notes-heading" class="section-title">
+              Notes
+            </h2>
+            <span class="section-count">
+              {notes.length} {notes.length === 1 ? 'note' : 'notes'}
+            </span>
+          </div>
+          <ul class="notes">
+            {notes.map((n) => (
+              <li>
+                <a class="note-row" href={`/notes/${n.id}/`}>
+                  <span class="note-title">{n.data.title}</span>
+                  {n.data.date && (
+                    <time
+                      class="note-date"
+                      datetime={n.data.date.toISOString()}
+                    >
+                      {formatProjectDate(n.data.date)}
+                    </time>
+                  )}
+                  {n.data.desc && <span class="note-desc">{n.data.desc}</span>}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <section id="about" class="block about" aria-labelledby="about-heading">
+      <h2 id="about-heading" class="section-title">About</h2>
+      <div>
+        <p class="about-text">
+          I study Computer Science at ETH Zürich. Before that I spent six years
+          in the specialised mathematics programme at Radnóti Miklós High
+          School.
         </p>
-      </div>
-
-      <div class="bento-card">
-        <h2>🏆 Highlights</h2>
-        <div class="metrics-container">
-          <div class="metric-row">
-            <div>
-              <span class="metric-label">Computer Science</span>
-              <span class="metric-sub">Advanced Matura (2025)</span>
-            </div>
-            <span class="metric-value">100%</span>
-          </div>
-          <div class="metric-row">
-            <div>
-              <span class="metric-label">Mathematics</span>
-              <span class="metric-sub">Advanced Matura (2026)</span>
-            </div>
-            <span class="metric-value">98%</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="bento-card">
-        <h2>🌐 Languages</h2>
-        <div class="lang-row">
-          <span class="lang-name">German</span>
-          <span class="lang-badge">Goethe C1</span>
-        </div>
-        <div class="lang-row">
-          <span class="lang-name">English</span>
-          <span class="lang-badge">Cambridge C1</span>
-        </div>
-        <div class="lang-row">
-          <span class="lang-name">Hungarian</span>
-          <span class="lang-badge">Native</span>
-        </div>
-      </div>
-
-      {
-        featured && (
-          <a
-            href={featuredHref}
-            class:list={[
-              'bento-card span-2 is-link featured',
-              { 'has-cover': featured.data.cover },
-            ]}
-            {...(featuredExternal && {
-              target: '_blank',
-              rel: 'noopener noreferrer',
-            })}
-          >
-            <div class="featured-text">
-              <h2>🚀 Featured project</h2>
-              {featured.data.date && (
-                <time
-                  class="featured-date"
-                  datetime={featured.data.date.toISOString()}
-                >
-                  {formatProjectDate(featured.data.date)}
-                </time>
-              )}
-              <div class="featured-title-row">
-                <h3>{featured.data.title}</h3>
-                {featured.data.status && (
-                  <span class="featured-status">{featured.data.status}</span>
-                )}
-              </div>
-              <p>{featured.data.desc}</p>
-              <span class="featured-more">
-                {featuredExternal ? `Open ↗` : `Read more →`}
-              </span>
-            </div>
-            {featured.data.cover && (
-              <CoverImage
-                cover={featured.data.cover}
-                coverLight={featured.data.coverLight}
-                width={640}
-                class="featured-cover"
-              />
-            )}
-          </a>
-        )
-      }
-
-      <div class="bento-card span-3">
-        <h2>👀 Interests</h2>
-        <div class="interest-groups">
-          <div>
-            <h3 class="interest-label">Professional</h3>
-            <div class="interests-grid">
-              <span class="interest-tag">🛡️ Cybersecurity</span>
-              <span class="interest-tag">🔒 Cryptography</span>
-              <span class="interest-tag">🖥️ Web Development</span>
-              <span class="interest-tag">🤖 AI</span>
-            </div>
-          </div>
-          <div>
-            <h3 class="interest-label">Personal</h3>
-            <div class="interests-grid">
-              <span class="interest-tag">💪 Gym</span>
-              <span class="interest-tag">🌄 Hiking</span>
-              <span class="interest-tag">🎬 Movies</span>
-              <span class="interest-tag">🎨 Creative projects</span>
-              <span class="interest-tag">😴 Sleeping</span>
-            </div>
-          </div>
-        </div>
+        <dl class="facts">
+          <dt>matura</dt>
+          <dd>Computer Science 100% (2025), Mathematics 98% (2026)</dd>
+          <dt>languages</dt>
+          <dd>Hungarian, English C1, German C1</dd>
+          <dt>into</dt>
+          <dd>Security, cryptography, web, AI</dd>
+        </dl>
       </div>
     </section>
   </div>
 </BaseLayout>
 
 <style>
-  /* Glow Background */
-  .glow-bg {
-    position: fixed;
-    top: -10%;
-    right: -10%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-    z-index: -1;
-    pointer-events: none;
-    filter: blur(60px);
-  }
-
-  /* Header & Navigation */
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 3.5rem;
-  }
-
-  .nav-actions {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    gap: 16px;
-  }
-
-  /* Hero Section */
+  /* Hero */
   .hero {
+    margin-bottom: 120px;
+  }
+
+  .hero-id {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    gap: 48px;
-    margin-bottom: 72px;
-    position: relative;
+    gap: 20px 40px;
+    margin-bottom: 32px;
   }
 
-  .hero-text {
-    max-width: 680px;
-    padding: 32px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  .hero :global(.hero-photo) {
+    width: var(--photo-size);
+    height: var(--photo-size);
+    border-radius: var(--radius-round);
+    object-fit: cover;
   }
 
-  .hero h1 {
-    font-size: clamp(2.6rem, 6vw, 4.8rem);
-    font-weight: 900;
-    letter-spacing: -0.04em;
-    line-height: 1.1;
-    margin-bottom: 16px;
+  .hero-name {
+    font-size: clamp(3.6rem, 10vw, 8.2rem);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 0.84;
   }
 
-  .hero h1 :global(span) {
-    background: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .hero p {
-    font-size: clamp(1.05rem, 2vw, 1.4rem);
+  .hero-lede {
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    line-height: 1.45;
     color: var(--text-muted);
-    font-weight: 400;
-    line-height: 1.6;
+    max-width: 34em;
   }
 
   .hero-links {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 28px;
-  }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    padding: 10px 18px;
-    border-radius: 999px;
-    border: 1px solid var(--border);
-    background: var(--pill-bg);
-    color: var(--text);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 700;
-    transition: var(--transition);
-  }
-
-  .btn:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
-  }
-
-  .btn-primary {
-    background: var(--accent-gradient);
-    border-color: transparent;
-    color: #fff;
-  }
-
-  .btn-primary:hover {
-    border-color: transparent;
-    box-shadow: 0 10px 25px -10px var(--accent);
-  }
-
-  /* Avatar */
-  .hero-avatar {
-    width: 300px;
-    height: 300px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    position: relative;
-    padding: 5px;
-    margin-right: 32px;
-    cursor: pointer;
-    transition: var(--transition);
-    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3);
-  }
-
-  .hero-avatar::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: var(--accent-gradient);
-    z-index: 1;
-  }
-
-  .hero-avatar-inner {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    overflow: hidden;
-    background: var(--bg);
-    position: relative;
-    z-index: 3;
-  }
-
-  .hero-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: var(--transition);
-    filter: grayscale(5%) contrast(102%);
-  }
-
-  .hero-avatar:hover {
-    transform: scale(1.04) translateY(-2px);
-  }
-
-  .hero-avatar:hover img {
-    transform: scale(1.05);
-    filter: grayscale(0%) contrast(100%);
-  }
-
-  /* Bento Grid */
-  .bento-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
-
-  .bento-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 36px;
-    box-shadow: var(--card-shadow);
-    transition: var(--transition);
-    backdrop-filter: blur(12px);
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  @media (hover: hover) {
-    .bento-card.is-link:hover {
-      transform: translateY(-4px);
-      border-color: var(--accent);
-      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.15);
-    }
-  }
-
-  .bento-card.is-link:active {
-    transform: translateY(-2px);
-    border-color: var(--accent);
-    box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.2);
-  }
-
-  .bento-card.span-2 {
-    grid-column: span 2;
-  }
-
-  .bento-card.span-3 {
-    grid-column: span 3;
-  }
-
-  /* Featured Project */
-  .featured {
-    display: flex;
-    flex-direction: column;
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .featured-text {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
-
-  .featured.has-cover {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 28px;
-    align-items: stretch;
-  }
-
-  .featured :global(.featured-cover) {
-    width: 100%;
-    height: 100%;
-    min-height: 160px;
-    object-fit: cover;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-  }
-
-  .featured h3 {
-    font-size: 1.15rem;
-    font-weight: 700;
-    margin: 4px 0 8px;
-  }
-
-  .featured-title-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin: 4px 0 8px;
-  }
-
-  .featured-title-row h3 {
-    margin: 0;
-  }
-
-  .featured-status {
-    flex-shrink: 0;
-    font-family: var(--font-mono);
-    padding: 2px 10px;
-    border-radius: 999px;
-    border: 1px solid rgba(34, 197, 94, 0.35);
-    background: rgba(34, 197, 94, 0.08);
-    color: #22c55e;
-    font-size: 0.75rem;
-    font-weight: 700;
-  }
-
-  .featured-date {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--text-sub);
-  }
-
-  .featured-more {
-    margin-top: auto;
-    padding-top: 16px;
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--accent);
-  }
-
-  .bento-card h2 {
-    font-size: 1.35rem;
-    font-weight: 700;
-    margin-bottom: 16px;
-    letter-spacing: -0.02em;
-  }
-
-  .bento-card p {
-    color: var(--text-muted);
+    gap: 8px 24px;
     font-size: 1.05rem;
-    line-height: 1.6;
   }
 
-  /* Metrics */
-  .metrics-container {
+  /* Sections */
+  .block {
+    margin-bottom: 104px;
+  }
+
+  #projects {
+    margin-bottom: 120px;
+  }
+
+  .sheets {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 20px;
   }
 
-  .metric-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 10px;
+  /* Notes */
+  .notes {
+    list-style: none;
+    border-top: 1px solid var(--line);
   }
 
-  .metric-row:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-  }
-
-  .metric-label {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--text-muted);
-  }
-
-  .metric-value {
-    font-size: 1.6rem;
-    font-weight: 900;
-    color: var(--text);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .metric-sub {
-    font-size: 0.75rem;
-    color: var(--text-sub);
-    font-weight: 500;
-    display: block;
-  }
-
-  /* Language List */
-  .lang-row {
+  .note-row {
     display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 8px;
-    margin-bottom: 14px;
-    align-items: center;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 24px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
   }
 
-  .lang-row:last-child {
-    margin-bottom: 0;
-  }
-
-  .lang-name {
+  .note-title {
+    font-size: 1.3rem;
     font-weight: 600;
-    font-size: 0.95rem;
+    letter-spacing: -0.01em;
   }
 
-  .lang-badge {
-    padding: 4px 10px;
-    background: var(--pill-bg);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    font-size: 0.75rem;
-    font-weight: 800;
-    color: var(--accent);
+  .note-row:hover .note-title {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
   }
 
-  /* Interests */
-  .interest-groups {
-    display: flex;
-    gap: 32px;
-  }
-
-  /* Each group takes the width its pills need, wrapping only when space runs out */
-  .interest-groups > div {
-    flex: 0 1 auto;
-    min-width: 0;
-  }
-
-  .interest-groups > div + div {
-    padding-left: 32px;
-    border-left: 1px solid var(--border);
-  }
-
-  .interest-label {
+  .note-date {
+    align-self: center;
     font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    font-size: 13px;
     color: var(--text-sub);
-    margin-bottom: 12px;
   }
 
-  .interests-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .interest-tag {
-    background: var(--pill-bg);
-    border: 1px solid var(--border);
-    padding: 8px 14px;
-    border-radius: 999px;
-    font-size: 0.85rem;
-    font-weight: 600;
+  .note-desc {
+    grid-column: 1 / -1;
     color: var(--text-muted);
-    transition: var(--transition);
+    line-height: 1.5;
   }
 
-  .interest-tag:hover {
-    border-color: var(--accent);
-    color: var(--text);
+  /* About */
+  .about {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 20px 48px;
+    margin-bottom: 96px;
   }
 
-  /* Media Queries */
-  @media (max-width: 900px) {
-    header {
-      margin-bottom: 32px;
-      padding: 10px 14px;
-      top: 12px;
+  .about-text {
+    margin-bottom: 28px;
+    font-size: 1.2rem;
+    line-height: 1.55;
+    color: var(--text-muted);
+    max-width: 34em;
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: 140px minmax(0, 1fr);
+    gap: 10px 20px;
+  }
+
+  .facts dt {
+    padding-top: 3px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-sub);
+  }
+
+  @media (max-width: 760px) {
+    .hero :global(.hero-photo) {
+      width: 96px;
+      height: 96px;
     }
 
-    .nav-actions {
-      gap: 8px;
+    .hero-id {
+      gap: 16px 20px;
     }
 
-    .hero {
-      flex-direction: column-reverse;
-      align-items: center;
-      text-align: center;
-      gap: 0px;
-      margin-bottom: 0px;
+    .about {
+      grid-template-columns: minmax(0, 1fr);
     }
 
-    .hero-text {
-      align-items: center;
-      text-align: center;
-    }
-
-    .hero-avatar {
-      width: 250px;
-      height: 250px;
-      margin-right: 0px;
-    }
-
-    .bento-grid {
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
-    .bento-card.span-2,
-    .bento-card.span-3 {
-      grid-column: auto;
-    }
-
-    .hero-links {
-      justify-content: center;
-    }
-
-    .interest-groups {
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .interest-groups > div + div {
-      padding-left: 0;
-      border-left: none;
-    }
-
-    .featured.has-cover {
-      grid-template-columns: 1fr;
-    }
-
-    .featured :global(.featured-cover) {
-      order: -1;
-      aspect-ratio: 16 / 9;
-      height: auto;
+    .facts {
+      grid-template-columns: 96px minmax(0, 1fr);
     }
   }
 </style>

@@ -1,0 +1,71 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+  // Section of the home page the current page belongs to, underlined in the nav
+  current?: 'projects' | 'notes' | 'about';
+}
+
+const { current } = Astro.props;
+const links = [
+  { id: 'projects', label: 'Projects' },
+  { id: 'notes', label: 'Notes' },
+  { id: 'about', label: 'About' },
+] as const;
+---
+
+<header class="site-header">
+  <a href="/" class="header-name">Gergő Miszori</a>
+  <nav aria-label="Main">
+    {
+      links.map((l) => (
+        <a
+          href={`/#${l.id}`}
+          class="nav-link"
+          aria-current={current === l.id ? 'page' : undefined}
+        >
+          {l.label}
+        </a>
+      ))
+    }
+    <ThemeToggle />
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 72px;
+  }
+
+  .header-name {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  nav {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .nav-link {
+    padding: 10px 12px;
+  }
+
+  .nav-link[aria-current='page'] {
+    text-decoration: underline;
+    text-underline-offset: 6px;
+  }
+
+  @media (max-width: 760px) {
+    .nav-link {
+      display: none;
+    }
+  }
+</style>

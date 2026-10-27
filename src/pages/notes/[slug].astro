@@ -1,0 +1,186 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import { formatProjectDate } from '../../utils/date';
+import { hasWriteup } from '../../utils/projects';
+
+export async function getStaticPaths() {
+  const entries = (
+    await getCollection('projects', ({ data }) => {
+      return import.meta.env.PROD ? !data.draft : true;
+    })
+  ).filter(hasWriteup);
+
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<BaseLayout
+  title={`${entry.data.title} — Gergő Miszori`}
+  description={entry.data.desc}
+>
+  <div class="container">
+    <SiteHeader current="notes" />
+
+    <article class="article">
+      <a href="/#notes" class="tlink back">← Notes</a>
+      <header>
+        {
+          (entry.data.date || entry.data.tags.length > 0) && (
+            <div class="meta">
+              {entry.data.date && (
+                <time datetime={entry.data.date.toISOString()}>
+                  {formatProjectDate(entry.data.date)}
+                </time>
+              )}
+              {entry.data.tags.length > 0 && (
+                <span>{entry.data.tags.join(' · ').toLowerCase()}</span>
+              )}
+            </div>
+          )
+        }
+        <h1 class="title">{entry.data.title}</h1>
+        {entry.data.desc && <p class="lede">{entry.data.desc}</p>}
+      </header>
+      <div class="prose">
+        <Content />
+      </div>
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .article {
+    max-width: var(--prose-max);
+    margin: 0 auto 120px;
+  }
+
+  .back {
+    display: inline-block;
+    margin-bottom: 40px;
+    font-size: 15px;
+    color: var(--text-muted);
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    margin-bottom: 18px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-sub);
+  }
+
+  .title {
+    margin-bottom: 28px;
+    font-size: clamp(2.6rem, 6vw, 4.4rem);
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    line-height: 0.95;
+    overflow-wrap: break-word;
+    text-wrap: balance;
+  }
+
+  .lede {
+    margin-bottom: 40px;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+
+  /* Markdown body */
+  .prose {
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+
+  .prose :global(h2) {
+    margin: 48px 0 16px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+
+  .prose :global(h3) {
+    margin: 32px 0 12px;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .prose :global(p),
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin-bottom: 24px;
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    padding-left: 1.5rem;
+  }
+
+  .prose :global(li) {
+    margin-bottom: 6px;
+  }
+
+  .prose :global(a) {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  .prose :global(a:hover) {
+    text-decoration-thickness: 2px;
+  }
+
+  .prose :global(blockquote) {
+    margin: 0 0 24px;
+    padding: 4px 0 4px 20px;
+    border-left: 2px solid var(--text);
+    color: var(--text-muted);
+  }
+
+  .prose :global(hr) {
+    margin: 40px 0;
+    border: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .prose :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    border-radius: var(--radius-picture);
+  }
+
+  .prose :global(:not(pre) > code) {
+    padding: 0.15rem 0.35rem;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+
+  .prose :global(pre) {
+    margin: 0 0 24px;
+    padding: 20px;
+    overflow-x: auto;
+    border-radius: var(--radius-picture);
+    background-color: var(--code-bg) !important;
+  }
+
+  .prose :global(pre code) {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+</style>
