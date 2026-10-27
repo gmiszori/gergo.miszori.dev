@@ -27,8 +27,8 @@ const live = projects.filter((p) => p.data.status === 'Live').length;
         <Image
           src={gergooImg}
           alt="Gergő Miszori"
-          width={336}
-          height={336}
+          width={480}
+          height={480}
           quality="high"
           loading="eager"
           class="hero-photo"
@@ -147,7 +147,7 @@ const live = projects.filter((p) => p.data.status === 'Live').length;
   }
 
   .hero-name {
-    font-size: clamp(3.6rem, 10vw, 8.2rem);
+    font-size: clamp(3.6rem, 10vw, 9.5rem);
     font-weight: 700;
     letter-spacing: -0.05em;
     line-height: 0.84;
@@ -252,11 +252,6 @@ const live = projects.filter((p) => p.data.status === 'Live').length;
   }
 
   @media (max-width: 760px) {
-    .hero :global(.hero-photo) {
-      width: 96px;
-      height: 96px;
-    }
-
     .hero-id {
       gap: 16px 20px;
     }

@@ -30,8 +30,19 @@
   toggleBtn?.addEventListener('click', () => {
     const current = document.documentElement.getAttribute('data-theme');
     const next = current === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    syncPressed(next);
+    const apply = () => {
+      document.documentElement.setAttribute('data-theme', next);
+      syncPressed(next);
+    };
+    // Cross-fade where supported, so text and background change together
+    const reduceMotion = globalThis.matchMedia?.(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+    if (document.startViewTransition && !reduceMotion) {
+      document.startViewTransition(apply);
+    } else {
+      apply();
+    }
     try {
       localStorage.setItem('portfolio-theme-v2', next);
     } catch {

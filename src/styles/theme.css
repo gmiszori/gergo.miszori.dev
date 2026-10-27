@@ -25,15 +25,11 @@ a {
   text-decoration: none;
 }
 
-/* Theme switches fade instead of snapping */
-*,
-*::before,
-*::after {
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease,
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
+/* Theme switches cross-fade the whole page at once (see ThemeToggle) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+  animation-timing-function: ease;
 }
 
 /* --------------------------------------------------------------------------
@@ -46,10 +42,11 @@ a {
   --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', monospace;
 
   /* Layout */
-  --container-max: 1100px;
-  --prose-max: 680px;
-  --sheet-height: 300px;
-  --photo-size: 168px;
+  --container-max: 1280px;
+  --prose-max: 760px;
+  --sheet-height: 320px;
+  /* As tall as the two-line hero name, which scales with the viewport */
+  --photo-size: clamp(96px, 16vw, 240px);
 
   /* Radii */
   --radius-picture: 14px;
@@ -141,7 +138,13 @@ a {
 .container {
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: 28px 24px 40px;
+  padding: 28px 40px 40px;
+}
+
+@media (max-width: 760px) {
+  .container {
+    padding: 24px 20px 32px;
+  }
 }
 
 /* The only link style: underlined text */
