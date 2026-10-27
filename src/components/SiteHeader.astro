@@ -4,9 +4,11 @@ import ThemeToggle from './ThemeToggle.astro';
 interface Props {
   // Section of the home page the current page belongs to, underlined in the nav
   current?: 'projects' | 'notes' | 'about';
+  // The home page shows only the theme switch: the hero already carries the name
+  home?: boolean;
 }
 
-const { current } = Astro.props;
+const { current, home = false } = Astro.props;
 const links = [
   { id: 'projects', label: 'Projects' },
   { id: 'notes', label: 'Notes' },
@@ -14,22 +16,26 @@ const links = [
 ] as const;
 ---
 
-<header class="site-header">
-  <a href="/" class="header-name">Gergő Miszori</a>
-  <nav aria-label="Main">
-    {
-      links.map((l) => (
-        <a
-          href={`/#${l.id}`}
-          class="nav-link"
-          aria-current={current === l.id ? 'page' : undefined}
-        >
-          {l.label}
-        </a>
-      ))
-    }
-    <ThemeToggle />
-  </nav>
+<header class:list={['site-header', { home }]}>
+  {!home && <a href="/" class="header-name">Gergő Miszori</a>}
+  {
+    home ? (
+      <ThemeToggle />
+    ) : (
+      <nav aria-label="Main">
+        {links.map((l) => (
+          <a
+            href={`/#${l.id}`}
+            class="nav-link"
+            aria-current={current === l.id ? 'page' : undefined}
+          >
+            {l.label}
+          </a>
+        ))}
+        <ThemeToggle />
+      </nav>
+    )
+  }
 </header>
 
 <style>
@@ -38,6 +44,10 @@ const links = [
     justify-content: space-between;
     align-items: center;
     margin-bottom: 72px;
+  }
+
+  .site-header.home {
+    justify-content: flex-end;
   }
 
   .header-name {
