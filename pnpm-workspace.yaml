@@ -9,3 +9,7 @@ allowBuilds:
 minimumReleaseAgeExclude:
   - miniflare@5.20261023.1-beta
   - wrangler@4.154.0
+
+# satori pins fflate 0.7.3, which has GHSA-px8p-9vwx-vf98; drop once satori updates
+overrides:
+  'fflate@<0.7.5': 0.7.5
