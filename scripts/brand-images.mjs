@@ -142,7 +142,7 @@ function readProjects() {
 // ---------------------------------------------------------------------------
 // GM tile: favicons (rounded) and app icons (full bleed for masking)
 // ---------------------------------------------------------------------------
-const gmTile = (size, { rounded, letters }) =>
+const gmTileAt = (size, { rounded, letters }, [dx, dy] = [0, 0]) =>
   el(
     'div',
     {
@@ -159,8 +159,38 @@ const gmTile = (size, { rounded, letters }) =>
       fontSize: Math.round(size * letters),
       letterSpacing: -size * letters * 0.06,
     },
-    'GM'
+    [
+      el(
+        'div',
+        { display: 'flex', transform: `translate(${dx}px, ${dy}px)` },
+        'GM'
+      ),
+    ]
   );
+
+// Flexbox centres the text box, not the letters (side bearings and the
+// trailing letter spacing push them off), so measure the ink and shift it
+async function gmTile(size, options) {
+  const scale = 1024 / size;
+  const { width, height, pixels } = new Resvg(
+    await toSvg(gmTileAt(size, options), size, size),
+    { fitTo: { mode: 'width', value: 1024 } }
+  ).render();
+  let [left, right, top, bottom] = [width, -1, height, -1];
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      const i = (y * width + x) * 4;
+      if (pixels[i] < 128 || pixels[i + 3] < 128) continue;
+      left = Math.min(left, x);
+      right = Math.max(right, x);
+      top = Math.min(top, y);
+      bottom = Math.max(bottom, y);
+    }
+  }
+  const dx = (width - 1 - right - left) / 2 / scale;
+  const dy = (height - 1 - bottom - top) / 2 / scale;
+  return gmTileAt(size, options, [dx, dy]);
+}
 
 // A .ico that wraps PNG images (supported by every current browser)
 function icoFromPngs(entries) {
@@ -198,16 +228,16 @@ for (const project of readProjects()) {
 }
 
 const favicon = (size) => gmTile(size, { rounded: true, letters: 0.44 });
-write('public/favicon.svg', await toSvg(favicon(64), 64, 64));
-write('public/favicon.png', await toPng(favicon(48), 48, 48));
-write('public/favicon-96x96.png', await toPng(favicon(96), 96, 96));
+write('public/favicon.svg', await toSvg(await favicon(64), 64, 64));
+write('public/favicon.png', await toPng(await favicon(48), 48, 48));
+write('public/favicon-96x96.png', await toPng(await favicon(96), 96, 96));
 write(
   'public/favicon.ico',
   icoFromPngs(
     await Promise.all(
       [32, 48].map(async (size) => ({
         size,
-        png: await toPng(favicon(size), size, size),
+        png: await toPng(await favicon(size), size, size),
       }))
     )
   )
@@ -216,11 +246,15 @@ write(
 // iOS rounds the corners itself; maskable icons keep the letters in the safe zone
 write(
   'public/apple-touch-icon.png',
-  await toPng(gmTile(180, { rounded: false, letters: 0.42 }), 180, 180)
+  await toPng(await gmTile(180, { rounded: false, letters: 0.42 }), 180, 180)
 );
 for (const size of [192, 512]) {
   write(
     `public/web-app-manifest-${size}x${size}.png`,
-    await toPng(gmTile(size, { rounded: false, letters: 0.32 }), size, size)
+    await toPng(
+      await gmTile(size, { rounded: false, letters: 0.32 }),
+      size,
+      size
+    )
   );
 }
