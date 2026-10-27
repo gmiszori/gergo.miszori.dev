@@ -4,7 +4,7 @@ desc: 'Self-hosted, end-to-end encrypted sharing of files, folders, and text sec
 type: 'project'
 color: 'blue'
 url: 'https://vault.miszori.dev'
-status: 'Live'
+status: 'Preview'
 featured: true
 cover: './cover.jpg'
 coverLight: './cover-light.jpg'

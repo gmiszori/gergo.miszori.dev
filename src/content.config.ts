@@ -29,7 +29,7 @@ const projects = defineCollection({
         type: z.enum(['note', 'project']).default('note'),
         url: z.string().url().optional(),
         repo: z.string().url().optional(),
-        status: z.enum(['Live', 'In progress', 'Archived']).optional(),
+        status: z.enum(['Live', 'Preview', 'In progress', 'Archived']).optional(),
         featured: z.boolean().default(false),
         color: z.enum(projectColors).optional(),
       })

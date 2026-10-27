@@ -12,7 +12,6 @@ const projects = entries
   .filter((p) => p.data.type === 'project')
   .sort((a, b) => Number(b.data.featured) - Number(a.data.featured));
 const notes = entries.filter((p) => p.data.type === 'note');
-const live = projects.filter((p) => p.data.status === 'Live').length;
 ---
 
 <BaseLayout
@@ -60,7 +59,9 @@ const live = projects.filter((p) => p.data.status === 'Live').length;
             <h2 id="projects-heading" class="section-title">
               Projects
             </h2>
-            {live > 0 && <span class="section-count">{live} live</span>}
+            <span class="section-count">
+              {projects.length} {projects.length === 1 ? 'project' : 'projects'}
+            </span>
           </div>
           <div class="sheets">
             {projects.map((p, i) => (
@@ -110,7 +111,7 @@ const live = projects.filter((p) => p.data.status === 'Live').length;
         <p class="about-text">
           I study Computer Science at ETH Zürich. Before that I spent six years
           in the specialised mathematics programme at Radnóti Miklós High
-          School.
+          School in Szeged.
         </p>
         <dl class="facts">
           <dt>matura</dt>

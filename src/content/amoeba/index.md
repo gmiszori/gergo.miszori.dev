@@ -4,7 +4,6 @@ desc: 'Five in a row on an endless board, with online matchmaking or local play 
 type: 'project'
 color: 'orange'
 url: 'https://amoeba.miszori.dev'
-status: 'Live'
 cover: './cover.jpg'
 coverLight: './cover-light.jpg'
 ---
