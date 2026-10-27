@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import gergooImg from '../assets/gergoo.webp';
+import gergooImg from '../assets/gergoo.jpg';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from './SiteHeader.astro';
 import ProjectSheet from './ProjectSheet.astro';
@@ -29,7 +29,7 @@ const live = projects.filter((p) => p.data.status === 'Live').length;
           alt="Gergő Miszori"
           width={480}
           height={480}
-          quality="high"
+          quality={90}
           loading="eager"
           class="hero-photo"
         />
