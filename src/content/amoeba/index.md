@@ -2,6 +2,7 @@
 title: 'amoeba.miszori.dev'
 desc: 'Five in a row on an endless board, with online matchmaking or local play on one device.'
 type: 'project'
+color: 'orange'
 url: 'https://amoeba.miszori.dev'
 status: 'Live'
 cover: './cover.jpg'
