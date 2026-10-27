@@ -1,8 +1,8 @@
 # miszori.dev
 
-My personal website, with a landing page and a collection of projects and notes. It is built with Astro and pre-rendered to static pages served from Cloudflare's edge, with no server code. The code was written with AI under my direction.
+My personal website: one page with my projects, notes and a short about, plus a page per note. It is built with Astro and pre-rendered to static pages served from Cloudflare's edge, with no server code. The code was written with AI under my direction.
 
-![Social preview of miszori.dev: name, "Computer Science @ ETH Zürich" and a profile photo](public/og-image.png)
+![Social preview of miszori.dev: the name Gergő Miszori in white on black](public/og-image.png)
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![Astro](https://img.shields.io/badge/built%20with-Astro-BC52EE)
@@ -11,11 +11,11 @@ My personal website, with a landing page and a collection of projects and notes.
 
 ## Features
 
-- **Projects and notes.** Each entry is a Markdown or MDX file in `src/content/`, with an optional cover image that has light and dark variants.
+- **Projects and notes.** Each entry is a Markdown or MDX file in `src/content/`, with an optional cover image that has light and dark variants. Every project picks one colour from the brand palette (`color` in its frontmatter), which colours its sheet on the home page and its link preview.
 - **Light and dark theme.** The theme follows the system setting and can be switched by hand. It keeps working when browser storage is blocked.
 - **Fast static pages.** Every page is pre-rendered at build time and served as a static asset, so there is nothing to run or patch on a server.
-- **Search and sharing ready.** Pages include a sitemap, structured data and a large social preview image.
-- **Old links keep working.** Legacy domains and the former `/en`, `/de` and `/hu` routes redirect permanently to the current pages.
+- **Search and sharing ready.** Pages include a sitemap, structured data and a large social preview image. `pnpm brand-images` renders the previews (the site's and one per project) and the favicons from the brand font; run it after adding a project.
+- **Old links keep working.** Legacy domains, the former `/en`, `/de` and `/hu` routes, and the old `/projects` pages redirect permanently to the current pages.
 
 ## Quick start
 
@@ -47,11 +47,12 @@ Browser ─► Cloudflare edge ─► static assets (dist/)
 
 | Directory | What |
 |-----------|------|
-| `src/pages/` | Routes: the landing page, the projects list, one page per entry, and the 404 page. |
+| `src/pages/` | Routes: the home page, one page per note under `/notes/`, and the 404 page. |
 | `src/content/` | Projects and notes, one folder per entry with its `index.md` and images. |
 | `src/components/`, `src/layouts/` | Astro components and the shared page layout. |
-| `src/styles/` | Theme tokens and project page styles. |
-| `public/` | Files copied as they are: icons, the social preview image, the theme initializer, [`_headers`](public/_headers) and [`_redirects`](public/_redirects). |
+| `src/styles/` | The brand's colour and type tokens. |
+| `public/` | Files copied as they are: icons, the social preview images, the theme initializer, [`_headers`](public/_headers) and [`_redirects`](public/_redirects). |
+| `scripts/` | [`brand-images.mjs`](scripts/brand-images.mjs), which generates the social preview images and favicons. |
 | `tests/` | Node regression tests that run against the built site. |
 
 ## Deploying
