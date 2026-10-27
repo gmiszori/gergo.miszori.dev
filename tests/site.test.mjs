@@ -179,6 +179,7 @@ test('the old projects page and its notes redirect permanently', () => {
 test('every project shows as a sheet in its palette colour, with a preview image', () => {
   const html = readOutput('index.html');
   for (const [id, color] of [
+    ['mensa', 'green'],
     ['vault', 'blue'],
     ['amoeba', 'orange'],
   ]) {
