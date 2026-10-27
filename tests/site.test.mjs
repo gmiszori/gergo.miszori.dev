@@ -8,8 +8,7 @@ const output = new URL('../dist/', import.meta.url);
 const readOutput = (path) => readFileSync(new URL(path, output), 'utf8');
 const pages = [
   ['index.html', 'en', 'Gergő Miszori'],
-  ['projects/index.html', 'en', 'Projects & Notes'],
-  ['projects/my-investing-strategy/index.html', 'en', null],
+  ['notes/my-investing-strategy/index.html', 'en', 'My Investment Strategy'],
   ['404.html', 'en', 'Page not found'],
 ];
 
@@ -143,7 +142,7 @@ test('English is the only locale', () => {
 });
 
 test('pages share the large social preview image', () => {
-  const html = readOutput('projects/index.html');
+  const html = readOutput('notes/my-investing-strategy/index.html');
   assert.ok(html.includes('content="https://miszori.dev/og-image.png"'));
   assert.ok(html.includes('content="summary_large_image"'));
   assert.ok(!html.includes('hreflang'));
@@ -169,10 +168,29 @@ test('legacy locale routes redirect permanently', () => {
   }
 });
 
-test('project date formatting preserves English UTC dates and missing values', () => {
+test('the old projects page and its notes redirect permanently', () => {
+  const redirects = readOutput('_redirects');
+  assert.match(redirects, /^\/projects\s+\/#projects\s+301$/m);
+  assert.match(redirects, /^\/projects\/\s+\/#projects\s+301$/m);
+  assert.match(redirects, /^\/projects\/\*\s+\/notes\/:splat\s+301$/m);
+  assert.throws(() => readOutput('projects/index.html'));
+});
+
+test('every project shows as a sheet in its palette colour, with a preview image', () => {
+  const html = readOutput('index.html');
+  for (const [id, color] of [
+    ['vault', 'blue'],
+    ['amoeba', 'orange'],
+  ]) {
+    assert.match(html, new RegExp(`class="[^"]*sheet--${color}`));
+    assert.ok(readFileSync(new URL(`og/${id}.png`, output)).length > 0);
+  }
+});
+
+test('project dates are ISO, in UTC, and empty when missing', () => {
   assert.equal(formatProjectDate(), '');
   assert.equal(
     formatProjectDate(new Date('2026-01-01T00:30:00+02:00')),
-    'Dec 31, 2025'
+    '2025-12-31'
   );
 });
