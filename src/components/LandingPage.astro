@@ -179,9 +179,13 @@ const notes = entries.filter((p) => p.data.type === 'note');
   }
 
   .sheets {
-    display: flex;
-    flex-direction: column;
+    /* Equal rows: on phones the sheets take their height from the text,
+       and sheets of different heights would let go of the stack one by one */
+    display: grid;
+    grid-auto-rows: 1fr;
     gap: 20px;
+    /* Room for the first sheet's negative top margin */
+    padding-top: calc(var(--n, 1) * 14px);
   }
 
   /* Notes */

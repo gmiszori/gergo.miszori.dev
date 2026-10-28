@@ -53,6 +53,9 @@ const external = Boolean(url);
     /* Pad each sheet's bottom so the whole stack lets go at the same
        moment, instead of the last sheet sliding over the ones above */
     margin-bottom: calc(var(--after) * 14px);
+    /* Take the padding back at the top, so the gaps stay even and every
+       sheet's margins add up to the same, which keeps the rows equal */
+    margin-top: calc((var(--after) + 1) * -14px);
     display: block;
     height: var(--sheet-height);
     padding: 28px;
@@ -60,11 +63,6 @@ const external = Boolean(url);
     background: var(--fill);
     color: var(--body);
     box-shadow: var(--sheet-ring);
-  }
-
-  /* Take back the padding the sheet above added, so the gaps stay even */
-  .sheet + .sheet {
-    margin-top: calc((var(--after) + 1) * -14px);
   }
 
   .sheet--orange {
