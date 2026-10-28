@@ -63,7 +63,7 @@ const notes = entries.filter((p) => p.data.type === 'note');
               {projects.length} {projects.length === 1 ? 'project' : 'projects'}
             </span>
           </div>
-          <div class="sheets">
+          <div class="sheets" style={`--n: ${projects.length}`}>
             {projects.map((p, i) => (
               <ProjectSheet entry={p} index={i} />
             ))}

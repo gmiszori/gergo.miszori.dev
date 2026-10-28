@@ -46,8 +46,13 @@ const external = Boolean(url);
     --fill: var(--blue);
     --ink: var(--blue-ink);
     --body: var(--blue-text);
+    /* Sheets still to come below this one */
+    --after: calc(var(--n, 1) - 1 - var(--i, 0));
     position: sticky;
     top: calc(24px + var(--i, 0) * 14px);
+    /* Pad each sheet's bottom so the whole stack lets go at the same
+       moment, instead of the last sheet sliding over the ones above */
+    margin-bottom: calc(var(--after) * 14px);
     display: block;
     height: var(--sheet-height);
     padding: 28px;
@@ -55,6 +60,11 @@ const external = Boolean(url);
     background: var(--fill);
     color: var(--body);
     box-shadow: var(--sheet-ring);
+  }
+
+  /* Take back the padding the sheet above added, so the gaps stay even */
+  .sheet + .sheet {
+    margin-top: calc((var(--after) + 1) * -14px);
   }
 
   .sheet--orange {
