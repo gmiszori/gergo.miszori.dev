@@ -11,7 +11,7 @@ My personal website: one page with my projects, notes and a short about, plus a 
 
 ## Features
 
-- **Projects and notes.** Each entry is a Markdown or MDX file in `src/content/`, with an optional cover image that has light and dark variants. Every project picks one colour from the brand palette (`color` in its frontmatter), which colours its sheet on the home page and its link preview.
+- **Projects and notes.** Each entry is a Markdown file in `src/content/`, with an optional cover image that has light and dark variants. Every project picks one colour from the brand palette (`color` in its frontmatter), which colours its sheet on the home page and its link preview.
 - **Light and dark theme.** The theme follows the system setting and can be switched by hand. It keeps working when browser storage is blocked.
 - **Fast static pages.** Every page is pre-rendered at build time and served as a static asset, so there is nothing to run or patch on a server.
 - **Search and sharing ready.** Pages include a sitemap, structured data and a large social preview image. `pnpm brand-images` renders the previews (the site's and one per project) and the favicons from the brand font; run it after adding a project.
